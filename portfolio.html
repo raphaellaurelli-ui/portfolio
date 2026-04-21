@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Videografía & Drones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a08;
+    --surface: #111110;
+    --surface2: #1a1a18;
+    --accent: #c8a96e;
+    --accent2: #e8d5b0;
+    --text: #f0ece4;
+    --muted: #8a8880;
+    --border: rgba(200,169,110,0.2);
+    --font-display: 'Cormorant Garamond', serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    cursor: crosshair;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1.4rem;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* HERO */
+  #hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(200,169,110,0.03) 0%, transparent 50%);
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 80px;
+    background: var(--accent);
+    margin-bottom: 2rem;
+    animation: growLine 1.5s ease forwards;
+  }
+
+  @keyframes growLine {
+    from { height: 0; opacity: 0; }
+    to { height: 80px; opacity: 1; }
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    max-width: 340px;
+    line-height: 1.9;
+    animation: fadeUp 1s ease 0.7s both;
+    border-left: 1px solid var(--border);
+    padding-left: 1.5rem;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeUp 1s ease 1s both;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* SERVICES */
+  #services {
+    background: var(--surface);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--surface2); }
+
+  .service-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    font-family: var(--font-display);
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--accent2);
+  }
+
+  .service-desc {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-price {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  /* GALLERY */
+  #gallery .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 3rem;
+  }
+
+  .gallery-item {
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    group: true;
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: var(--surface2);
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-item:hover .gallery-placeholder {
+    transform: scale(1.03);
+  }
+
+  .gallery-placeholder video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,8,0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  .gallery-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .gallery-empty {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .gallery-empty-icon {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--border);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  /* COLOR GRADE */
+  #colorgrade {
+    background: var(--surface);
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 3rem;
+  }
+
+  .compare-pair {
+    background: var(--border);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+  }
+
+  .compare-frame {
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .compare-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: rgba(10,10,8,0.8);
+    border: 1px solid var(--border);
+  }
+
+  .compare-badge.after { border-color: var(--accent); color: var(--accent); }
+
+  .frame-icon {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--surface);
+  }
+
+  /* EQUIPMENT */
+  #equipment {
+    background: var(--bg);
+  }
+
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .equip-category {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .equip-cat-title {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .equip-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .equip-list li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .equip-list li::before {
+    content: '—';
+    color: var(--border);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* BOOKING */
+  #booking {
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #booking::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .booking-info p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .booking-info ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .booking-info li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .booking-info li::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.85rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c8a96e'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form-group select option {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.7;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .btn-submit {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 1rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: flex-start;
+  }
+
+  .btn-submit:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .foot-logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  footer p {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  footer nav {
+    position: static;
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+    gap: 2rem;
+  }
+
+  footer nav a {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  footer nav a:hover { color: var(--accent); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,8,0.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    max-width: 480px;
+    width: 90%;
+    padding: 3rem;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  .modal p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: color 0.3s;
+  }
+
+  .modal-close:hover { color: var(--accent); }
+
+  .success-msg {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--accent);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+  }
+
+  .success-msg.show { display: flex; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #about { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr !important; }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .booking-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+
+  /* CURSOR GLOW */
+  .cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: opacity 0.3s;
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Frame & Flight</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#colorgrade">Color</a></li>
+    <li><a href="#equipment">Equipment</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-eyebrow">Videography · Drones · Color Grading</div>
+  <h1 class="hero-title">
+    Visual<br>
+    <em>Storytelling</em>
+  </h1>
+  <p class="hero-sub">
+    Cinematografía aérea y terrestre.<br>
+    Edición y colorización profesional.<br>
+    Cada frame, una decisión.
+  </p>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <div class="section-label">About</div>
+    <h2 class="section-title">Imágenes que<br><em style="font-style:italic; color:var(--accent)">hablan</em></h2>
+    <p style="color:var(--muted); font-size:11px; line-height:1.9; margin-bottom:1.5rem;">
+      Videógrafo, piloto de drones certificado, editor y colorista. Trabajo con una visión cinematográfica que une la técnica con la narrativa, desde el primer vuelo hasta el último fotograma.
+    </p>
+    <p style="color:var(--muted); font-size:11px; line-height:1.9;">
+      Especializado en producciones que exigen precisión visual: eventos, publicidad, inmobiliaria de lujo, deportes de acción y documental. Equipo profesional de alta gama, entregando calidad broadcast en cada proyecto.
+    </p>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <span class="stat-num">4K</span>
+      <span class="stat-label">Resolución máxima</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">Altitud creativa</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Drones en flota</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">RAW</span>
+      <span class="stat-label">Formato de entrega</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Services</div>
+  <h2 class="section-title">¿Qué puedo hacer<br>por tu proyecto?</h2>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">I.</span>
+      <div class="service-title">Videografía Terrestre</div>
+      <p class="service-desc">Cámara Fujifilm X-S20 con ópticas profesionales. Stabilización con gimbal DJI Ronin. Ideal para eventos, publicidad, entrevistas y narrativa comercial.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">II.</span>
+      <div class="service-title">Cinematografía Aérea</div>
+      <p class="service-desc">DJI Mini 4 Pro para tomas aéreas cinematográficas de alta resolución. Perspectivas imposibles desde tierra, con seguridad y precisión absoluta.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">III.</span>
+      <div class="service-title">FPV Dinámico</div>
+      <p class="service-desc">Drone FPV de carreras para persecuciones, movimientos imposibles y acción extrema. Transiciones fluidas entre tierra y aire que ningún otro sistema puede ofrecer.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">IV.</span>
+      <div class="service-title">Edición & Post</div>
+      <p class="service-desc">Montaje narrativo, motion graphics, corrección de color y entrega en todos los formatos. Desde cortos de 30 segundos hasta documentales largos.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">V.</span>
+      <div class="service-title">Color Grading</div>
+      <p class="service-desc">Clasificación de color cinematográfica. LUTs personalizadas, flujo RAW completo. Transformo material plano en una paleta visual con identidad propia.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">VI.</span>
+      <div class="service-title">Pack Completo</div>
+      <p class="service-desc">Producción integral: pre-producción, rodaje terrestre y aéreo, edición y entrega final. Un interlocutor único para todo el proceso creativo.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label">Gallery</div>
+  <h2 class="section-title">Trabajos<br><em style="font-style:italic; color:var(--accent)">destacados</em></h2>
+  <p style="color:var(--muted); font-size:11px; margin-bottom:0; margin-top:-0.5rem;">Sube tus mejores clips a estas posiciones — reemplaza las URLs de vídeo o inserta etiquetas &lt;video&gt; / &lt;iframe&gt;</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-empty-icon">▶</span>
+        <span class="gallery-empty">Clip destacado 01</span>
+        <span style="font-size:9px; color:var(--border); letter-spacing:0.2em;">16:9 · Drone / FPV</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-label">Título del proyecto</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-empty-icon">▶</span>
+        <span class="gallery-empty">Clip 02</span>
+        <span style="font-size:9px; color:var(--border); letter-spacing:0.2em;">Terrestre</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-label">Título del proyecto</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-empty-icon">▶</span>
+        <span class="gallery-empty">Clip 03</span>
+        <span style="font-size:9px; color:var(--border); letter-spacing:0.2em;">Aéreo</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-label">Título del proyecto</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-empty-icon">▶</span>
+        <span class="gallery-empty">Clip 04</span>
+        <span style="font-size:9px; color:var(--border); letter-spacing:0.2em;">FPV</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-label">Título del proyecto</span></div>
+    </div>
+    <div class="gallery-item">
+      <div class="gallery-placeholder">
+        <span class="gallery-empty-icon">▶</span>
+        <span class="gallery-empty">Clip 05</span>
+        <span style="font-size:9px; color:var(--border); letter-spacing:0.2em;">Evento</span>
+      </div>
+      <div class="gallery-overlay"><span class="gallery-label">Título del proyecto</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR GRADE -->
+<section id="colorgrade">
+  <div class="section-label">Color Grade</div>
+  <h2 class="section-title">Antes &<br><em style="font-style:italic; color:var(--accent)">Después</em></h2>
+  <p style="color:var(--muted); font-size:11px; line-height:1.9; margin-bottom:0.5rem; max-width:500px;">
+    La colorización no es solo estética — es narrativa. Cada proyecto recibe una identidad visual única, desarrollada desde el material RAW.
+  </p>
+  <p style="color:var(--muted); font-size:10px; letter-spacing:0.1em; margin-bottom:0;">Inserta capturas o frames de tus proyectos en los bloques marcados.</p>
+
+  <div class="compare-grid">
+    <div class="compare-pair">
+      <div class="compare-frame">
+        <span class="frame-icon">RAW</span>
+        <span class="compare-badge">Antes</span>
+      </div>
+      <div class="compare-frame">
+        <span class="frame-icon" style="color:var(--accent);">Grade</span>
+        <span class="compare-badge after">Después</span>
+      </div>
+    </div>
+    <div class="compare-pair">
+      <div class="compare-frame">
+        <span class="frame-icon">RAW</span>
+        <span class="compare-badge">Antes</span>
+      </div>
+      <div class="compare-frame">
+        <span class="frame-icon" style="color:var(--accent);">Grade</span>
+        <span class="compare-badge after">Después</span>
+      </div>
+    </div>
+    <div class="compare-pair">
+      <div class="compare-frame">
+        <span class="frame-icon">RAW</span>
+        <span class="compare-badge">Antes</span>
+      </div>
+      <div class="compare-frame">
+        <span class="frame-icon" style="color:var(--accent);">Grade</span>
+        <span class="compare-badge after">Después</span>
+      </div>
+    </div>
+    <div class="compare-pair">
+      <div class="compare-frame">
+        <span class="frame-icon">RAW</span>
+        <span class="compare-badge">Antes</span>
+      </div>
+      <div class="compare-frame">
+        <span class="frame-icon" style="color:var(--accent);">Grade</span>
+        <span class="compare-badge after">Después</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section id="equipment">
+  <div class="section-label">Equipment</div>
+  <h2 class="section-title">Arsenal<br><em style="font-style:italic; color:var(--accent)">técnico</em></h2>
+
+  <div class="equipment-grid">
+    <div class="equip-category">
+      <div class="equip-cat-title">Cámara Principal</div>
+      <ul class="equip-list">
+        <li>Fujifilm X-S20 (4K / F-Log2)</li>
+        <li>Objetivo Tokina 17–70mm f/2.8</li>
+        <li>Objetivo XF 55–200mm zoom</li>
+        <li>Objetivo fijo 35mm f/1.7</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Drones</div>
+      <ul class="equip-list">
+        <li>DJI Mini 4 Pro — 4K HDR</li>
+        <li>3 baterías — autonomía extendida</li>
+        <li>Drone FPV — 5 baterías</li>
+        <li>Gafas FPV + mando dedicado</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Soporte & Rig</div>
+      <ul class="equip-list">
+        <li>Gimbal DJI Ronin Mini 3</li>
+        <li>GoPro Hero 9 (cámara de acción)</li>
+        <li>Cage SmallRig + empuñadura superior</li>
+        <li>Trípode SmallRig C180</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Monitorización</div>
+      <ul class="equip-list">
+        <li>Monitor Blackmagic Video Assist 5" 12G</li>
+        <li>Alimentación V-Mount K&F</li>
+        <li>Soporte monitor SmallRig</li>
+        <li>Placa V-Mount SmallRig</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Audio</div>
+      <ul class="equip-list">
+        <li>Micrófono Sennheiser MKE 600</li>
+        <li>Señal directa a cámara</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Entrega</div>
+      <ul class="equip-list">
+        <li>4K / FHD según proyecto</li>
+        <li>H.265 / ProRes disponible</li>
+        <li>LUTs personalizadas</li>
+        <li>Archivos RAW bajo petición</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="section-label">Booking</div>
+  <div class="booking-layout">
+    <div class="booking-info">
+      <h2 class="section-title" style="font-size:2.5rem;">Hablemos<br><em style="font-style:italic; color:var(--accent)">de tu proyecto</em></h2>
+      <p>Cuéntame qué tienes en mente. Respondo en menos de 24 horas con disponibilidad y presupuesto orientativo sin compromiso.</p>
+      <ul>
+        <li>Presupuesto sin compromiso</li>
+        <li>Disponibilidad en 24h</li>
+        <li>Trabajo en toda la región</li>
+        <li>Pack terrestre + aéreo disponible</li>
+        <li>Entrega rápida cuando se necesita</li>
+      </ul>
+    </div>
+    <div class="booking-form" id="bookingForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre</label>
+          <input type="text" placeholder="Tu nombre" id="f-name">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="tu@email.com" id="f-email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Servicio</label>
+        <select id="f-service">
+          <option value="">— Selecciona un servicio —</option>
+          <option>Videografía Terrestre</option>
+          <option>Cinematografía Aérea (Mini 4 Pro)</option>
+          <option>FPV Dinámico</option>
+          <option>Edición & Post-producción</option>
+          <option>Color Grading</option>
+          <option>Pack Producción Completa</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha deseada</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="form-group">
+          <label>Presupuesto aprox.</label>
+          <select id="f-budget">
+            <option value="">— Presupuesto —</option>
+            <option>< 500 €</option>
+            <option>500 – 1.000 €</option>
+            <option>1.000 – 2.500 €</option>
+            <option>2.500 – 5.000 €</option>
+            <option>> 5.000 €</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descripción del proyecto</label>
+        <textarea placeholder="Cuéntame los detalles: localización, duración, uso final..." id="f-msg"></textarea>
+      </div>
+      <button class="btn-submit" onclick="submitForm()">Enviar solicitud</button>
+      <div class="success-msg" id="successMsg">
+        <span style="color:var(--accent); font-size:1.2rem; font-family:var(--font-display); font-style:italic;">✓</span>
+        Solicitud enviada — te respondo en menos de 24 horas.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Frame & Flight</div>
+  <p>© 2025 · Videografía profesional</p>
+  <nav>
+    <a href="#services">Servicios</a>
+    <a href="#gallery">Galería</a>
+    <a href="#booking">Contacto</a>
+  </nav>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>Reserva enviada</h3>
+    <p>Gracias por contactar. Revisaré tu solicitud y te responderé con disponibilidad y presupuesto orientativo en menos de 24 horas.</p>
+    <button class="btn-submit" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('mousemove', (e) => {
+    const glow = document.getElementById('cursorGlow');
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  function submitForm() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+
+    if (!name || !email || !service) {
+      alert('Por favor completa los campos obligatorios: nombre, email y servicio.');
+      return;
+    }
+
+    document.getElementById('successMsg').classList.add('show');
+    document.getElementById('modal').classList.add('open');
+    document.getElementById('bookingForm').reset();
+    document.getElementById('successMsg').classList.remove('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .equip-category, .stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
