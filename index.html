@@ -888,14 +888,14 @@
     </div>
       <div class="gallery-overlay"><span class="gallery-label">Faro Favaritx</span></div>
     </div>
-    <div class="gallery-item">
+    <div class="gallery-item" onclick="lancerPleinEcran()" style="cursor: pointer;">
       <div class="gallery-placeholder" style="padding: 0; overflow: hidden; position: relative;">
-        <iframe 
-            src="https://www.youtube.com/embed/-WPJq2k6s6M" 
-            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
-            allowfullscreen>
-        </iframe>
+        <video id="monClipMusical" playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="Bless compresse.mp4" type="video/mp4">
+        </video>
       </div>
+      <div class="gallery-overlay"><span class="gallery-label">▶ Lancer la vidéo</span></div>
+    </div>
       <div class="gallery-overlay"><span class="gallery-label">L'aventure Bless13k</span></div>
     </div>
     <div class="gallery-item">
@@ -1158,6 +1158,39 @@
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
   });
+</script>
+<script>
+function lancerPleinEcran() {
+    var video = document.getElementById("monClipMusical");
+
+    // 1. On affiche les contrôles (pour que l'utilisateur puisse régler le son ou quitter)
+    video.setAttribute("controls", "controls");
+
+    // 2. On lance la lecture de la musique
+    video.play();
+
+    // 3. On force le passage en plein écran (avec les compatibilités pour tous les navigateurs)
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) { /* Safari & iPhone */
+        video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) { /* Internet Explorer/Edge ancien */
+        video.msRequestFullscreen();
+    }
+}
+
+// L'astuce Pro : Quand l'utilisateur quitte le plein écran (touche Echap), on met la vidéo en pause !
+document.addEventListener('fullscreenchange', stopperVideo);
+document.addEventListener('webkitfullscreenchange', stopperVideo); // Safari
+
+function stopperVideo() {
+    // Si on n'est plus en plein écran...
+    if (!document.fullscreenElement && !document.webkitIsFullScreen) {
+        var video = document.getElementById("monClipMusical");
+        video.pause(); // On coupe le son et l'image
+        video.removeAttribute("controls"); // On recache l'interface pour retrouver ton beau design
+    }
+}
 </script>
 </body>
 </html>
