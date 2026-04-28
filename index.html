@@ -1164,7 +1164,63 @@
     <button class="btn-submit" onclick="closeModal()"><span>Cerrar</span></button>
   </div>
 </div>
-
+<script>
+  /* ─── REVEAL ON SCROLL ─── */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+ 
+/* ─── ANIMATED COUNTERS ─── */
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      let current = 0;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.round(current) + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 35);
+    });
+    counterObs.unobserve(entry.target);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.about-stats').forEach(el => counterObs.observe(el));
+ 
+/* ─── COMPARE SLIDERS ─── */
+function initSlider(id) {
+  const slider = document.getElementById(id);
+  const after = document.getElementById(id + '-after');
+  const divider = document.getElementById(id + '-div');
+  let dragging = false;
+ 
+  function setPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = Math.max(2, Math.min(98, ((x - rect.left) / rect.width) * 100));
+    after.style.width = pct + '%';
+    divider.style.left = pct + '%';
+  }
+ 
+  divider.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+  slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+ 
+  divider.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, {passive:false});
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+['cs1','cs2','cs3','cs4'].forEach(initSlider);
+</script>
 <script>
   document.addEventListener('mousemove', (e) => {
     const glow = document.getElementById('cursorGlow');
