@@ -915,53 +915,96 @@
 <!-- COLOR GRADE -->
 <section id="colorgrade">
   <div class="section-label">Color Grade</div>
-  <h2 class="section-title">Antes &<br><em style="font-style:italic; color:var(--accent)">Después</em></h2>
-  <p style="color:var(--muted); font-size:11px; line-height:1.9; margin-bottom:0.5rem; max-width:500px;">
-    La colorización no es solo estética — es narrativa. Cada proyecto recibe una identidad visual única, desarrollada desde el material RAW.
+  <h2 class="section-title">Antes &<br><em style="font-style:italic;color:var(--accent)">Después</em></h2>
+  <p style="color:var(--muted);font-size:11px;line-height:1.9;margin-bottom:0.5rem;max-width:500px;">
+    Arrastra el divisor para revelar la diferencia. La colorización no es solo estética — es narrativa.
   </p>
-  <p style="color:var(--muted); font-size:10px; letter-spacing:0.1em; margin-bottom:0;">Inserta capturas o frames de tus proyectos en los bloques marcados.</p>
-
+  <p style="color:rgba(200,169,110,0.5);font-size:10px;letter-spacing:0.1em;margin-bottom:2.5rem;">
+    ↔ Reemplaza los fondos CSS con tus imágenes reales usando las clases <code style="background:var(--surface2);padding:1px 5px;">.layer-before</code> y <code style="background:var(--surface2);padding:1px 5px;">.layer-after-inner</code>
+  </p>
+ 
   <div class="compare-grid">
-    <div class="compare-pair">
-      <div class="compare-frame">
-        <span class="frame-icon">RAW</span>
-        <span class="compare-badge">Antes</span>
+ 
+    <!-- Slider 1 -->
+    <div class="compare-slider reveal" id="cs1">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1c1c1a 0%,#2a2820 50%,#1a1c18 100%);">
+        <div class="vis vis-raw">Clip 01</div>
       </div>
-      <div class="compare-frame">
-        <span class="frame-icon" style="color:var(--accent);">Grade</span>
-        <span class="compare-badge after">Después</span>
+      <div class="layer-after" id="cs1-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#0d1a12 0%,#1a2e1a 50%,#0f1a10 100%);">
+          <div class="vis vis-graded">Clip 01</div>
+        </div>
       </div>
+      <div class="compare-divider" id="cs1-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
     </div>
-    <div class="compare-pair">
-      <div class="compare-frame">
-        <span class="frame-icon">RAW</span>
-        <span class="compare-badge">Antes</span>
+ 
+    <!-- Slider 2 -->
+    <div class="compare-slider reveal" id="cs2">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1e1c1a 0%,#2e2820 50%,#1e1c18 100%);">
+        <div class="vis vis-raw">Clip 02</div>
       </div>
-      <div class="compare-frame">
-        <span class="frame-icon" style="color:var(--accent);">Grade</span>
-        <span class="compare-badge after">Después</span>
+      <div class="layer-after" id="cs2-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#1a0d10 0%,#2e1a1a 50%,#1a0d0d 100%);">
+          <div class="vis vis-graded">Clip 02</div>
+        </div>
       </div>
+      <div class="compare-divider" id="cs2-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
     </div>
-    <div class="compare-pair">
-      <div class="compare-frame">
-        <span class="frame-icon">RAW</span>
-        <span class="compare-badge">Antes</span>
+ 
+    <!-- Slider 3 -->
+    <div class="compare-slider reveal" id="cs3">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1a1c1e 0%,#22262e 50%,#181a1e 100%);">
+        <div class="vis vis-raw">Clip 03</div>
       </div>
-      <div class="compare-frame">
-        <span class="frame-icon" style="color:var(--accent);">Grade</span>
-        <span class="compare-badge after">Después</span>
+      <div class="layer-after" id="cs3-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#0d1220 0%,#1a2040 50%,#0d1228 100%);">
+          <div class="vis vis-graded">Clip 03</div>
+        </div>
       </div>
+      <div class="compare-divider" id="cs3-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
     </div>
-    <div class="compare-pair">
-      <div class="compare-frame">
-        <span class="frame-icon">RAW</span>
-        <span class="compare-badge">Antes</span>
+ 
+    <!-- Slider 4 -->
+    <div class="compare-slider reveal" id="cs4">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1c1a18 0%,#2a2620 50%,#1c1a14 100%);">
+        <div class="vis vis-raw">Clip 04</div>
       </div>
-      <div class="compare-frame">
-        <span class="frame-icon" style="color:var(--accent);">Grade</span>
-        <span class="compare-badge after">Después</span>
+      <div class="layer-after" id="cs4-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#1a1400 0%,#302400 50%,#1a1400 100%);">
+          <div class="vis vis-graded">Clip 04</div>
+        </div>
       </div>
+      <div class="compare-divider" id="cs4-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
     </div>
+ 
   </div>
 </section>
 
