@@ -408,36 +408,83 @@
     margin-top: 3rem;
   }
 
-  .compare-pair {
-    background: var(--border);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-  }
-
-  .compare-frame {
-    aspect-ratio: 16/9;
-    background: var(--surface2);
+  .compare-slider {
     position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: col-resize;
+    user-select: none;
+   background: var(--surface2);
+  }
+  .compare-slider .layer {
+   position: absolute;
+    inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
   }
-
-  .compare-badge {
+  .layer-after {
     position: absolute;
-    top: 0.75rem;
-    left: 0.75rem;
+    inset: 0;
+    overflow: hidden;
+   width: 50%;
+  x}
+  .layer-after-inner {
+    position: absolute;
+    inset: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .compare-divider {
+    position: absolute;
+   top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    z-index: 10;
+    cursor: col-resize;
+    transform: translateX(-50%);
+  }
+  .compare-handle {
+   position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+   background: var(--accent);
+   display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 4px rgba(200,169,110,0.2);
+  }
+  .handle-arrows {
+    color: var(--bg);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .compare-badge-wrap {
+   position: absolute;
+    bottom: 0.75rem;
+   left: 0; right: 0;
+   display: flex;
+    justify-content: space-between;
+   padding: 0 0.75rem;
+    pointer-events: none;
+   z-index: 5;
+  }
+  .compare-badge {
     font-size: 8px;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     padding: 3px 8px;
-    background: rgba(10,10,8,0.8);
+   background: rgba(10,10,8,0.85);
     border: 1px solid var(--border);
   }
-
   .compare-badge.after { border-color: var(--accent); color: var(--accent); }
+  
 
   .frame-icon {
     font-family: var(--font-display);
@@ -1335,6 +1382,31 @@ document.getElementById('bookingForm').addEventListener('submit', async function
     btn.querySelector('span').textContent = 'Enviar solicitud';
   }
 });
+</script>
+<script>
+function initSlider(id) {
+  const slider = document.getElementById(id);
+  const after = document.getElementById(id + '-after');
+  const divider = document.getElementById(id + '-div');
+  let dragging = false;
+
+  function setPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = Math.max(2, Math.min(98, ((x - rect.left) / rect.width) * 100));
+    after.style.width = pct + '%';
+    divider.style.left = pct + '%';
+  }
+
+  divider.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+  slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  divider.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, {passive: false});
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive: true});
+  window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive: true});
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+['cs1','cs2','cs3','cs4'].forEach(initSlider);
 </script>
 </body>
 </html>
