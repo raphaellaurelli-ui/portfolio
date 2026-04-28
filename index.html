@@ -1030,66 +1030,72 @@
 <section id="booking">
   <div class="section-label">Booking</div>
   <div class="booking-layout">
-    <div class="booking-info">
-      <h2 class="section-title" style="font-size:2.5rem;">Hablemos<br><em style="font-style:italic; color:var(--accent)">de tu proyecto</em></h2>
+    <div class="booking-info reveal">
+      <h2 class="section-title" style="font-size:2.5rem;">Hablemos<br><em style="font-style:italic;color:var(--accent)">de tu proyecto</em></h2>
       <p>Cuéntame qué tienes en mente. Respondo en menos de 24 horas con disponibilidad y presupuesto orientativo sin compromiso.</p>
       <ul>
         <li>Presupuesto sin compromiso</li>
-        <li>Disponibilidad en 24h</li>
+        <li>Respuesta en menos de 24h</li>
         <li>Trabajo en toda la región</li>
         <li>Pack terrestre + aéreo disponible</li>
         <li>Entrega rápida cuando se necesita</li>
       </ul>
     </div>
-    <div class="booking-form" id="bookingForm">
-      <div class="form-row">
-        <div class="form-group">
-          <label>Nombre</label>
-          <input type="text" placeholder="Tu nombre" id="f-name">
+    <div class="reveal">
+      <form class="booking-form" id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Nombre *</label>
+            <input type="text" id="f-name" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email *</label>
+            <input type="email" id="f-email" name="email" placeholder="tu@email.com" required>
+          </div>
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="tu@email.com" id="f-email">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Servicio</label>
-        <select id="f-service">
-          <option value="">— Selecciona un servicio —</option>
-          <option>Videografía Terrestre</option>
-          <option>Cinematografía Aérea (Mini 4 Pro)</option>
-          <option>FPV Dinámico</option>
-          <option>Edición & Post-producción</option>
-          <option>Color Grading</option>
-          <option>Pack Producción Completa</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label>Fecha deseada</label>
-          <input type="date" id="f-date">
+          <label for="f-phone">Teléfono</label>
+          <input type="tel" id="f-phone" name="telefono" placeholder="+34 000 000 000">
         </div>
         <div class="form-group">
-          <label>Presupuesto aprox.</label>
-          <select id="f-budget">
-            <option value="">— Presupuesto —</option>
-            <option>< 500 €</option>
-            <option>500 – 1.000 €</option>
-            <option>1.000 – 2.500 €</option>
-            <option>2.500 – 5.000 €</option>
-            <option>> 5.000 €</option>
+          <label for="f-service">Servicio *</label>
+          <select id="f-service" name="servicio" required>
+            <option value="">— Selecciona un servicio —</option>
+            <option>Videografía Terrestre</option>
+            <option>Cinematografía Aérea (Mini 4 Pro)</option>
+            <option>FPV Dinámico</option>
+            <option>Edición & Post-producción</option>
+            <option>Color Grading</option>
+            <option>Pack Producción Completa</option>
           </select>
         </div>
-      </div>
-      <div class="form-group">
-        <label>Descripción del proyecto</label>
-        <textarea placeholder="Cuéntame los detalles: localización, duración, uso final..." id="f-msg"></textarea>
-      </div>
-      <button class="btn-submit" onclick="submitForm()">Enviar solicitud</button>
-      <div class="success-msg" id="successMsg">
-        <span style="color:var(--accent); font-size:1.2rem; font-family:var(--font-display); font-style:italic;">✓</span>
-        Solicitud enviada — te respondo en menos de 24 horas.
-      </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-date">Fecha deseada</label>
+            <input type="date" id="f-date" name="fecha">
+          </div>
+          <div class="form-group">
+            <label for="f-budget">Presupuesto aprox.</label>
+            <select id="f-budget" name="presupuesto">
+              <option value="">— Presupuesto —</option>
+              <option>Menos de 500 €</option>
+              <option>500 – 1.000 €</option>
+              <option>1.000 – 2.500 €</option>
+              <option>2.500 – 5.000 €</option>
+              <option>Más de 5.000 €</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-msg">Descripción del proyecto *</label>
+          <textarea id="f-msg" name="descripcion" placeholder="Cuéntame los detalles: localización, duración, uso final..." required></textarea>
+        </div>
+        <!-- Campo anti-spam honeypot -->
+        <input type="text" name="_gotcha" style="display:none">
+        <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Frame & Flight">
+        <button type="submit" class="btn-submit" id="submitBtn"><span>Enviar solicitud</span></button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -1105,13 +1111,14 @@
   </nav>
 </footer>
 
-<!-- MODAL -->
+<!-- MODAL SUCCESS -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <h3>Reserva enviada</h3>
-    <p>Gracias por contactar. Revisaré tu solicitud y te responderé con disponibilidad y presupuesto orientativo en menos de 24 horas.</p>
-    <button class="btn-submit" onclick="closeModal()">Cerrar</button>
+    <span class="modal-icon">✓</span>
+    <h3>Solicitud enviada</h3>
+    <p>Gracias por contactar. He recibido tu solicitud y te responderé con disponibilidad y presupuesto orientativo en menos de 24 horas.</p>
+    <button class="btn-submit" onclick="closeModal()"><span>Cerrar</span></button>
   </div>
 </div>
 
