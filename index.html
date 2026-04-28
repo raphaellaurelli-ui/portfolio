@@ -1202,5 +1202,40 @@ function stopperVideo() {
     }
 }
 </script>
+</script>
+/* ─── FORMSPREE EMAIL ─── */
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Enviando...';
+  status.className = 'form-status';
+  status.style.display = 'none';
+ 
+  try {
+    const data = new FormData(this);
+    const res = await fetch('https://formspree.io/f/xgvejqdw', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      this.reset();
+      document.getElementById('modal').classList.add('open');
+    } else {
+      const json = await res.json();
+      throw new Error(json.errors ? json.errors.map(e => e.message).join(', ') : 'Error al enviar');
+    }
+  } catch(err) {
+    status.className = 'form-status error';
+    status.style.display = 'flex';
+    status.innerHTML = '⚠ No se pudo enviar. Escríbeme directamente a <a href="mailto:raphael.laurelli@gmail.com" style="color:inherit;text-decoration:underline;margin-left:4px">raphael.laurelli@gmail.com</a>';
+  } finally {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Enviar solicitud';
+  }
+});
+</script>
 </body>
 </html>
