@@ -935,15 +935,33 @@
     </div>
       <div class="gallery-overlay"><span class="gallery-label">Faro Favaritx</span></div>
     </div>
-     <div class="gallery-item">
-      <div class="gallery-placeholder" style="padding:0; overflow:hidden; position:relative;">
-        <video autoplay loop muted playsinline
-          style="width:100%;height:100%;object-fit:cover;pointer-events:none;">
-          <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="gallery-overlay"><span class="gallery-label">Ton titre ici</span></div>
+     <div class="gallery-item" style="position:relative;">
+  <div class="gallery-placeholder" style="padding:0; overflow:hidden; position:relative;">
+    <video id="vid1" loop muted autoplay playsinline
+      style="width:100%;height:100%;object-fit:cover;">
+      <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
+    </video>
+
+    <!-- Contrôles custom -->
+    <div style="position:absolute;bottom:0.75rem;right:0.75rem;display:flex;gap:0.5rem;z-index:10;">
+      
+      <!-- Bouton son -->
+      <button onclick="toggleMute('vid1', this)"
+        style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+               width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+               align-items:center;justify-content:center;transition:background 0.2s;"
+        title="Son">🔇</button>
+
+      <!-- Bouton plein écran -->
+      <button onclick="goFullscreen('vid1')"
+        style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+               width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+               align-items:center;justify-content:center;transition:background 0.2s;"
+        title="Plein écran">⛶</button>
     </div>
+  </div>
+  <div class="gallery-overlay"><span class="gallery-label">Ton titre ici</span></div>
+</div>
     <!-- L'overlay avec le titre de ton clip -->
     <div class="gallery-overlay"><span class="gallery-label">Clip Bless</span></div>
 </div>
@@ -1409,5 +1427,21 @@ function initSlider(id) {
 }
 ['cs1','cs2','cs3','cs4'].forEach(initSlider);
 </script>
+
+<script>
+function toggleMute(videoId, btn) {
+  const vid = document.getElementById(videoId);
+  vid.muted = !vid.muted;
+  btn.textContent = vid.muted ? '🔇' : '🔊';
+}
+
+function goFullscreen(videoId) {
+  const vid = document.getElementById(videoId);
+  if (vid.requestFullscreen) vid.requestFullscreen();
+  else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+  else if (vid.mozRequestFullScreen) vid.mozRequestFullScreen();
+}
+</script>
+
 </body>
 </html>
