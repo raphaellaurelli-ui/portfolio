@@ -891,6 +891,7 @@ function filterColor(color, btn) {
         : s.classList.add('hidden');
     }
   });
+  document.querySelectorAll('.univers.hidden video').forEach(v => v.pause());
 
   // Scroll vers la section si filtre unique
   if(color !== 'all'){
