@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galerie — Laurelli_prod</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a08;
+  --surface: #111110;
+  --surface2: #1a1a18;
+  --accent: #c8a96e;
+  --accent2: #e8d5b0;
+  --text: #f0ece4;
+  --muted: #8a8880;
+  --border: rgba(200,169,110,0.2);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Couleurs des univers */
+  --turquoise: #4ecdc4;
+  --blanc: #e8e4dc;
+  --vert: #6b8f5e;
+  --or: #c8a96e;
+  --rouge: #c0392b;
+  --nuit: #2c3e6b;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font-mono);
+  font-size:13px;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:crosshair;
+}
+a { color:inherit; text-decoration:none; }
+
+/* SCROLL PROGRESS */
+#scroll-progress {
+  position:fixed; top:0; left:0; height:2px;
+  background:linear-gradient(90deg, var(--accent), var(--accent2));
+  width:0%; z-index:999; transition:width 0.1s linear;
+}
+
+/* CURSOR */
+.cursor-glow {
+  position:fixed; width:400px; height:400px;
+  background:radial-gradient(circle, rgba(200,169,110,0.05) 0%, transparent 70%);
+  border-radius:50%; pointer-events:none;
+  transform:translate(-50%,-50%); z-index:0;
+}
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:1.5rem 3rem;
+  background:linear-gradient(to bottom, rgba(10,10,8,0.96), transparent);
+  backdrop-filter:blur(4px);
+  transition:padding 0.3s;
+}
+nav.scrolled { padding:1rem 3rem; background:rgba(10,10,8,0.97); }
+.nav-logo {
+  font-family:var(--font-display); font-size:1.4rem;
+  font-weight:300; letter-spacing:0.15em; color:var(--accent); font-style:italic;
+}
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a {
+  font-size:10px; letter-spacing:0.25em; text-transform:uppercase;
+  color:var(--muted); transition:color 0.3s; position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0;
+  width:0; height:1px; background:var(--accent); transition:width 0.3s;
+}
+.nav-links a:hover { color:var(--accent); }
+.nav-links a:hover::after { width:100%; }
+.nav-back {
+  font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+  border:1px solid var(--border); color:var(--muted);
+  padding:0.5rem 1.4rem; transition:all 0.3s; display:flex; align-items:center; gap:0.5rem;
+}
+.nav-back:hover { border-color:var(--accent); color:var(--accent); }
+
+/* HERO */
+#hero {
+  height:60vh; min-height:400px;
+  display:flex; flex-direction:column;
+  justify-content:flex-end; padding:0 3rem 4rem;
+  position:relative; overflow:hidden;
+}
+.hero-bg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 80% 20%, rgba(78,205,196,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 80%, rgba(200,169,110,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(107,143,94,0.02) 0%, transparent 60%);
+}
+.hero-eyebrow {
+  font-size:9px; letter-spacing:0.45em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:1.2rem;
+  animation:fadeUp 0.8s ease 0.2s both;
+}
+.hero-title {
+  font-family:var(--font-display);
+  font-size:clamp(3rem,7vw,6rem);
+  font-weight:300; line-height:0.9;
+  letter-spacing:-0.02em;
+  animation:fadeUp 0.8s ease 0.4s both;
+}
+.hero-title em { font-style:italic; color:var(--accent); display:block; }
+.hero-desc {
+  color:var(--muted); font-size:11px; letter-spacing:0.1em;
+  max-width:400px; line-height:1.9; margin-top:1.5rem;
+  border-left:1px solid var(--border); padding-left:1.5rem;
+  animation:fadeUp 0.8s ease 0.6s both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+/* COLOR NAV — filtre horizontal */
+#color-nav {
+  position:sticky; top:64px; z-index:90;
+  background:rgba(10,10,8,0.95); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:0 3rem;
+  display:flex; align-items:center; gap:0;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+#color-nav::-webkit-scrollbar { display:none; }
+.color-tab {
+  font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--muted); padding:1.1rem 1.8rem;
+  cursor:pointer; white-space:nowrap;
+  border-bottom:2px solid transparent;
+  transition:all 0.3s; display:flex; align-items:center; gap:0.6rem;
+  background:none; border-left:none; border-right:none; border-top:none;
+  font-family:var(--font-mono);
+}
+.color-tab .dot {
+  width:7px; height:7px; border-radius:50%;
+  flex-shrink:0; transition:transform 0.3s;
+}
+.color-tab:hover { color:var(--text); }
+.color-tab:hover .dot { transform:scale(1.4); }
+.color-tab.active { color:var(--text); border-bottom-color:currentColor; }
+.color-tab[data-color="all"] .dot { background:var(--accent); }
+.color-tab[data-color="turquoise"] .dot { background:var(--turquoise); }
+.color-tab[data-color="blanc"] .dot { background:var(--blanc); }
+.color-tab[data-color="vert"] .dot { background:var(--vert); }
+.color-tab[data-color="or"] .dot { background:var(--or); }
+.color-tab[data-color="rouge"] .dot { background:var(--rouge); }
+.color-tab[data-color="nuit"] .dot { background:var(--nuit); }
+.color-tab.active[data-color="turquoise"] { color:var(--turquoise); border-bottom-color:var(--turquoise); }
+.color-tab.active[data-color="blanc"] { color:var(--blanc); border-bottom-color:var(--blanc); }
+.color-tab.active[data-color="vert"] { color:var(--vert); border-bottom-color:var(--vert); }
+.color-tab.active[data-color="or"] { color:var(--or); border-bottom-color:var(--or); }
+.color-tab.active[data-color="rouge"] { color:var(--rouge); border-bottom-color:var(--rouge); }
+.color-tab.active[data-color="nuit"] { color:var(--nuit); border-bottom-color:var(--nuit); }
+
+/* UNIVERS SECTION */
+.univers {
+  padding:5rem 3rem;
+  transition:opacity 0.4s, transform 0.4s;
+}
+.univers.hidden { display:none; }
+
+.univers-header {
+  display:flex; align-items:flex-end;
+  justify-content:space-between;
+  margin-bottom:3rem;
+  padding-bottom:1.5rem;
+  border-bottom:1px solid var(--border);
+  gap:2rem;
+}
+.univers-left { flex:1; }
+.univers-label {
+  font-size:9px; letter-spacing:0.4em; text-transform:uppercase;
+  margin-bottom:0.75rem; display:flex; align-items:center; gap:0.75rem;
+}
+.univers-label .dot-lg {
+  width:10px; height:10px; border-radius:50%; flex-shrink:0;
+}
+.univers-title {
+  font-family:var(--font-display);
+  font-size:clamp(2rem,4vw,3.2rem);
+  font-weight:300; line-height:1;
+}
+.univers-title em { font-style:italic; }
+.univers-desc {
+  color:var(--muted); font-size:11px; line-height:1.8;
+  max-width:340px; margin-top:0.75rem;
+}
+.univers-count {
+  font-family:var(--font-display); font-size:5rem; font-weight:300;
+  line-height:1; opacity:0.1; flex-shrink:0;
+  letter-spacing:-0.05em;
+}
+
+/* GRIDS */
+.grid-masonry {
+  display:grid;
+  gap:3px;
+}
+.grid-masonry.cols-3 { grid-template-columns:repeat(3,1fr); }
+.grid-masonry.cols-2 { grid-template-columns:repeat(2,1fr); }
+.grid-masonry.mixed {
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:200px;
+}
+
+/* VIDEO CARD */
+.vid-card {
+  position:relative; overflow:hidden;
+  background:var(--surface2);
+  cursor:pointer;
+}
+.vid-card.tall { grid-row:span 2; }
+.vid-card.wide { grid-column:span 2; }
+.vid-card.square { aspect-ratio:1/1; }
+.vid-card.ratio-16-9 { aspect-ratio:16/9; }
+.vid-card.ratio-9-16 { aspect-ratio:9/16; }
+
+.vid-card video, .vid-card .vid-placeholder {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 0.6s ease;
+  display:block;
+}
+.vid-card:hover video, .vid-card:hover .vid-placeholder {
+  transform:scale(1.04);
+}
+
+/* Placeholder visuel */
+.vid-placeholder {
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:0.5rem;
+  background:var(--surface2); position:relative;
+}
+.vid-placeholder-icon {
+  font-family:var(--font-display); font-size:3rem; font-style:italic;
+  opacity:0.15; line-height:1;
+}
+.vid-placeholder-label {
+  font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+  color:var(--muted); opacity:0.5;
+}
+
+/* Overlay info */
+.vid-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(10,10,8,0.85) 0%, transparent 55%);
+  opacity:0; transition:opacity 0.3s;
+  display:flex; flex-direction:column;
+  justify-content:space-between; padding:1rem 1.25rem;
+  pointer-events:none;
+}
+.vid-card:hover .vid-overlay { opacity:1; }
+.vid-overlay-top { display:flex; justify-content:flex-end; gap:0.4rem; pointer-events:all; }
+.vid-overlay-bottom { pointer-events:none; }
+
+.vid-title {
+  font-family:var(--font-display); font-size:1.1rem;
+  font-weight:300; color:var(--accent2); line-height:1.2;
+}
+.vid-meta {
+  font-size:8px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); margin-top:0.3rem;
+}
+
+/* Boutons contrôle */
+.ctrl-btn {
+  width:30px; height:30px;
+  background:rgba(10,10,8,0.8); border:1px solid var(--accent);
+  color:var(--accent); cursor:pointer; font-size:11px;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; font-family:var(--font-mono);
+  flex-shrink:0;
+}
+.ctrl-btn:hover { background:var(--accent); color:var(--bg); }
+
+/* Colour strip décoratif */
+.color-strip {
+  height:2px; width:100%;
+  position:absolute; bottom:0; left:0; z-index:5;
+  opacity:0; transition:opacity 0.3s;
+}
+.vid-card:hover .color-strip { opacity:1; }
+
+/* FOOTER */
+footer {
+  padding:3rem; border-top:1px solid var(--border);
+  display:flex; justify-content:space-between; align-items:center;
+}
+footer .foot-logo {
+  font-family:var(--font-display); font-size:1.2rem;
+  font-weight:300; font-style:italic; color:var(--accent);
+}
+footer p { font-size:10px; color:var(--muted); letter-spacing:0.15em; }
+.foot-nav { display:flex; gap:2rem; }
+.foot-nav a {
+  font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+  color:var(--muted); transition:color 0.3s;
+}
+.foot-nav a:hover { color:var(--accent); }
+
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(20px); transition:opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav { padding:1.25rem 1.5rem; }
+  .nav-links { display:none; }
+  #color-nav { padding:0 1.5rem; }
+  .univers { padding:3rem 1.5rem; }
+  .grid-masonry.cols-3 { grid-template-columns:repeat(2,1fr); }
+  .grid-masonry.mixed { grid-template-columns:repeat(2,1fr); grid-auto-rows:150px; }
+  .univers-count { font-size:3rem; }
+  footer { flex-direction:column; gap:1.5rem; text-align:center; }
+}
+@media(max-width:550px){
+  .grid-masonry.cols-3, .grid-masonry.cols-2 { grid-template-columns:1fr; }
+  .grid-masonry.mixed { grid-template-columns:1fr; }
+  .vid-card.wide { grid-column:span 1; }
+}
+</style>
+</head>
+<body>
+
+<div id="scroll-progress"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">Laurelli_prod</div>
+  <ul class="nav-links">
+    <li><a href="#turquoise">Mar</a></li>
+    <li><a href="#blanc">Sur</a></li>
+    <li><a href="#vert">Naturaleza</a></li>
+    <li><a href="#or">Luz</a></li>
+    <li><a href="#rouge">Acción</a></li>
+    <li><a href="#nuit">Noche</a></li>
+  </ul>
+  <a href="index.html" class="nav-back">← Portfolio</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-eyebrow">Galerie complète — Laurelli_prod</div>
+  <h1 class="hero-title">
+    Todos los<br>
+    <em>universos</em>
+  </h1>
+  <p class="hero-desc">
+    Cada color es un estado de ánimo.<br>
+    Cada clip, un momento capturado.<br>
+    Filtra por universo cromático.
+  </p>
+</section>
+
+<!-- COLOR NAV -->
+<div id="color-nav">
+  <button class="color-tab active" data-color="all" onclick="filterColor('all', this)">
+    <span class="dot"></span>Todos
+  </button>
+  <button class="color-tab" data-color="turquoise" onclick="filterColor('turquoise', this)">
+    <span class="dot"></span>Mar & Agua
+  </button>
+  <button class="color-tab" data-color="blanc" onclick="filterColor('blanc', this)">
+    <span class="dot"></span>Blanco & Sur
+  </button>
+  <button class="color-tab" data-color="vert" onclick="filterColor('vert', this)">
+    <span class="dot"></span>Verde & Naturaleza
+  </button>
+  <button class="color-tab" data-color="or" onclick="filterColor('or', this)">
+    <span class="dot"></span>Luz & Oro
+  </button>
+  <button class="color-tab" data-color="rouge" onclick="filterColor('rouge', this)">
+    <span class="dot"></span>Acción & Energía
+  </button>
+  <button class="color-tab" data-color="nuit" onclick="filterColor('nuit', this)">
+    <span class="dot"></span>Noche & Azul
+  </button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 1 — TURQUOISE / MAR & AGUA
+════════════════════════════════════════ -->
+<section class="univers reveal" id="turquoise" data-color="turquoise">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--turquoise);">
+        <span class="dot-lg" style="background:var(--turquoise);"></span>
+        Univers 01
+      </div>
+      <h2 class="univers-title">Mar &<br><em style="color:var(--turquoise);">Agua</em></h2>
+      <p class="univers-desc">Azul turquesa, reflejos, horizonte. El mar Mediterráneo como protagonista.</p>
+    </div>
+    <div class="univers-count" style="color:var(--turquoise);">01</div>
+  </div>
+
+  <div class="grid-masonry mixed">
+
+    <div class="vid-card wide tall reveal" data-vid="t1">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip turquoise 01</span>
+      </div>
+      <!-- Remplace par : <video id="t1" autoplay loop muted playsinline preload="none" style="width:100%;height:100%;object-fit:cover;"><source src="URL_R2.mp4" type="video/mp4"></video> -->
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--turquoise),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('t1',this)" title="Son">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('t1')" title="Plein écran">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Faro Favaritx</div>
+          <div class="vid-meta">Drone · Menorca · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card reveal" data-vid="t2">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 02</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--turquoise),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('t2',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('t2')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Aguas cristalinas</div>
+          <div class="vid-meta">FPV · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card tall reveal" data-vid="t3">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 03</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--turquoise),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('t3',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('t3')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Cala salvaje</div>
+          <div class="vid-meta">Terrestre · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card reveal" data-vid="t4">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 04</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--turquoise),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('t4',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('t4')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Horizonte</div>
+          <div class="vid-meta">Drone · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card wide reveal" data-vid="t5">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 05</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--turquoise),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('t5',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('t5')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Costa aérea</div>
+          <div class="vid-meta">Drone · FPV · 4K</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 2 — BLANC / SUR DE ESPAÑA
+════════════════════════════════════════ -->
+<section class="univers reveal" id="blanc" data-color="blanc" style="background:var(--surface);">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--blanc);">
+        <span class="dot-lg" style="background:var(--blanc);"></span>
+        Univers 02
+      </div>
+      <h2 class="univers-title">Blanco &<br><em style="color:var(--blanc);">Sur</em></h2>
+      <p class="univers-desc">Cal blanca, luz del mediodía, pueblos del sur. Andalucía e islas.</p>
+    </div>
+    <div class="univers-count" style="color:var(--blanc);">02</div>
+  </div>
+
+  <div class="grid-masonry cols-3">
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b1">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 01</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b1',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b1')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Pueblo blanco</div>
+          <div class="vid-meta">Terrestre · Andalucía</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b2">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 02</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b2',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b2')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Calles silenciosas</div>
+          <div class="vid-meta">Terrestre · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b3">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 03</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b3',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b3')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Luz de verano</div>
+          <div class="vid-meta">Drone · Sevilla</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b4">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 04</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b4',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b4')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Arquitectura</div>
+          <div class="vid-meta">Terrestre · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b5">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 05</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b5',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b5')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Patio andaluz</div>
+          <div class="vid-meta">Terrestre · 4K</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="vid-card ratio-16-9 reveal" data-vid="b6">
+      <div class="vid-placeholder">
+        <span class="vid-placeholder-icon">▶</span>
+        <span class="vid-placeholder-label">Clip 06</span>
+      </div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--blanc),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top">
+          <button class="ctrl-btn" onclick="toggleMute('b6',this)">🔇</button>
+          <button class="ctrl-btn" onclick="goFullscreen('b6')">⛶</button>
+        </div>
+        <div class="vid-overlay-bottom">
+          <div class="vid-title">Vista aérea</div>
+          <div class="vid-meta">Drone · 4K</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 3 — VERT / FORET & MONTAGNE
+════════════════════════════════════════ -->
+<section class="univers reveal" id="vert" data-color="vert">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--vert);">
+        <span class="dot-lg" style="background:var(--vert);"></span>
+        Univers 03
+      </div>
+      <h2 class="univers-title">Verde &<br><em style="color:var(--vert);">Naturaleza</em></h2>
+      <p class="univers-desc">Bosques, montaña, vegetación. La naturaleza en su estado más puro.</p>
+    </div>
+    <div class="univers-count" style="color:var(--vert);">03</div>
+  </div>
+
+  <div class="grid-masonry cols-2">
+    <div class="vid-card ratio-16-9 reveal" data-vid="v1">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 01</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--vert),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('v1',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('v1')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Bosque atlántico</div><div class="vid-meta">FPV · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="v2">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 02</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--vert),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('v2',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('v2')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Montaña</div><div class="vid-meta">Drone · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="v3">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 03</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--vert),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('v3',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('v3')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Río y cascada</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="v4">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 04</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--vert),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('v4',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('v4')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Vuelo sobre pinos</div><div class="vid-meta">FPV · Drone · 4K</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 4 — OR / LUZ & GOLDEN HOUR
+════════════════════════════════════════ -->
+<section class="univers reveal" id="or" data-color="or" style="background:var(--surface);">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--or);">
+        <span class="dot-lg" style="background:var(--or);"></span>
+        Univers 04
+      </div>
+      <h2 class="univers-title">Luz &<br><em style="color:var(--or);">Oro</em></h2>
+      <p class="univers-desc">Golden hour, puestas de sol, luz cálida. El momento mágico del día.</p>
+    </div>
+    <div class="univers-count" style="color:var(--or);">04</div>
+  </div>
+
+  <div class="grid-masonry cols-3">
+    <div class="vid-card ratio-16-9 reveal" data-vid="o1">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 01</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--or),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('o1',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('o1')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Golden hour</div><div class="vid-meta">Drone · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="o2">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 02</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--or),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('o2',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('o2')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Puesta de sol</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="o3">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 03</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--or),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('o3',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('o3')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Siluetas</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 5 — ROUGE / ACCIÓN & ENERGÍA
+════════════════════════════════════════ -->
+<section class="univers reveal" id="rouge" data-color="rouge">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--rouge);">
+        <span class="dot-lg" style="background:var(--rouge);"></span>
+        Univers 05
+      </div>
+      <h2 class="univers-title">Acción &<br><em style="color:var(--rouge);">Energía</em></h2>
+      <p class="univers-desc">FPV a toda velocidad, deportes, movimiento. La adrenalina hecha imagen.</p>
+    </div>
+    <div class="univers-count" style="color:var(--rouge);">05</div>
+  </div>
+
+  <div class="grid-masonry cols-2">
+    <div class="vid-card ratio-16-9 reveal" data-vid="r1">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 01</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--rouge),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('r1',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('r1')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">FPV chase</div><div class="vid-meta">FPV · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="r2">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 02</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--rouge),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('r2',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('r2')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Deporte urbano</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="r3">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 03</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--rouge),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('r3',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('r3')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Clip musical</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="r4">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 04</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--rouge),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('r4',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('r4')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Velocidad pura</div><div class="vid-meta">FPV · 4K</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     UNIVERS 6 — NUIT / NOCHE & AZUL
+════════════════════════════════════════ -->
+<section class="univers reveal" id="nuit" data-color="nuit" style="background:var(--surface);">
+  <div class="univers-header">
+    <div class="univers-left">
+      <div class="univers-label" style="color:var(--nuit);">
+        <span class="dot-lg" style="background:var(--nuit);"></span>
+        Univers 06
+      </div>
+      <h2 class="univers-title">Noche &<br><em style="color:#6b8fc8)">Azul</em></h2>
+      <p class="univers-desc">Azul profundo, luces nocturnas, atmósferas. La magia que sólo existe de noche.</p>
+    </div>
+    <div class="univers-count" style="color:var(--nuit);">06</div>
+  </div>
+
+  <div class="grid-masonry cols-3">
+    <div class="vid-card ratio-16-9 reveal" data-vid="n1">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 01</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--nuit),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('n1',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('n1')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Ciudad de noche</div><div class="vid-meta">Drone · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="n2">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 02</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--nuit),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('n2',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('n2')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Luces urbanas</div><div class="vid-meta">Terrestre · 4K</div></div>
+      </div>
+    </div>
+    <div class="vid-card ratio-16-9 reveal" data-vid="n3">
+      <div class="vid-placeholder"><span class="vid-placeholder-icon">▶</span><span class="vid-placeholder-label">Clip 03</span></div>
+      <div class="color-strip" style="background:linear-gradient(90deg,transparent,var(--nuit),transparent);"></div>
+      <div class="vid-overlay">
+        <div class="vid-overlay-top"><button class="ctrl-btn" onclick="toggleMute('n3',this)">🔇</button><button class="ctrl-btn" onclick="goFullscreen('n3')">⛶</button></div>
+        <div class="vid-overlay-bottom"><div class="vid-title">Blue hour</div><div class="vid-meta">Drone · 4K</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Laurelli_prod</div>
+  <p>© 2025 · Galerie complète</p>
+  <nav class="foot-nav">
+    <a href="index.html">← Portfolio</a>
+    <a href="index.html#booking">Réserver</a>
+  </nav>
+</footer>
+
+<script>
+/* ─── SCROLL PROGRESS ─── */
+window.addEventListener('scroll', () => {
+  const p = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('scroll-progress').style.width = p + '%';
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ─── CURSOR ─── */
+let mx=0,my=0,cx=0,cy=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function raf(){
+  cx+=(mx-cx)*0.12; cy+=(my-cy)*0.12;
+  const g=document.getElementById('cursorGlow');
+  g.style.left=cx+'px'; g.style.top=cy+'px';
+  requestAnimationFrame(raf);
+})();
+
+/* ─── REVEAL ─── */
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'), i*60);
+  });
+},{threshold:0.06});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* ─── LAZY VIDEO ─── */
+const vidObs = new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const vid = entry.target;
+    if(entry.isIntersecting){
+      const src = vid.querySelector('source');
+      if(src && !vid.getAttribute('data-loaded')){
+        vid.src = src.src;
+        vid.setAttribute('data-loaded','1');
+      }
+      vid.play().catch(()=>{});
+    } else {
+      vid.pause();
+    }
+  });
+},{threshold:0.2});
+document.querySelectorAll('video').forEach(v=>vidObs.observe(v));
+
+/* ─── COLOR FILTER ─── */
+function filterColor(color, btn) {
+  document.querySelectorAll('.color-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+
+  document.querySelectorAll('.univers').forEach(s=>{
+    if(color === 'all'){
+      s.classList.remove('hidden');
+    } else {
+      s.dataset.color === color
+        ? s.classList.remove('hidden')
+        : s.classList.add('hidden');
+    }
+  });
+
+  // Scroll vers la section si filtre unique
+  if(color !== 'all'){
+    const target = document.getElementById(color);
+    if(target){
+      setTimeout(()=>{
+        const offset = target.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({top:offset, behavior:'smooth'});
+      }, 50);
+    }
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+/* ─── CONTRÔLES VIDÉO ─── */
+function toggleMute(id, btn) {
+  const vid = document.getElementById(id);
+  if(!vid) return;
+  vid.muted = !vid.muted;
+  btn.textContent = vid.muted ? '🔇' : '🔊';
+}
+function goFullscreen(id) {
+  const vid = document.getElementById(id);
+  if(!vid) return;
+  if(vid.requestFullscreen) vid.requestFullscreen();
+  else if(vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+  else if(vid.mozRequestFullScreen) vid.mozRequestFullScreen();
+}
+</script>
+</body>
+</html>
