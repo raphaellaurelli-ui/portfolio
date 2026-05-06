@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Laurelli_prod</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a08;
+    --surface: #111110;
+    --surface2: #1a1a18;
+    --accent: #c8a96e;
+    --accent2: #e8d5b0;
+    --text: #f0ece4;
+    --muted: #8a8880;
+    --border: rgba(200,169,110,0.2);
+    --font-display: 'Cormorant Garamond', serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    cursor: crosshair;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 3rem;
+    background: linear-gradient(to bottom, rgba(10,10,8,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1.4rem;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* HERO */
+  #hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(200,169,110,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(200,169,110,0.03) 0%, transparent 50%);
+  }
+
+  .hero-line {
+    width: 1px;
+    height: 80px;
+    background: var(--accent);
+    margin-bottom: 2rem;
+    animation: growLine 1.5s ease forwards;
+  }
+
+  @keyframes growLine {
+    from { height: 0; opacity: 0; }
+    to { height: 80px; opacity: 1; }
+  }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+    display: block;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    max-width: 340px;
+    line-height: 1.9;
+    animation: fadeUp 1s ease 0.7s both;
+    border-left: 1px solid var(--border);
+    padding-left: 1.5rem;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 3rem;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeUp 1s ease 1s both;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+  }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .stat {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    display: block;
+  }
+
+  /* SERVICES */
+  #services {
+    background: var(--surface);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .service-card {
+    background: var(--bg);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--surface2); }
+
+  .service-icon {
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    display: block;
+    font-family: var(--font-display);
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--accent2);
+  }
+
+  .service-desc {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .service-price {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  /* GALLERY */
+  #gallery .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    margin-top: 3rem;
+  }
+
+  .gallery-item {
+    aspect-ratio: 16/9;
+    background: var(--surface2);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    group: true;
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: var(--surface2);
+    transition: transform 0.5s ease;
+  }
+
+  .gallery-item:hover .gallery-placeholder {
+    transform: scale(1.03);
+  }
+
+  .gallery-placeholder video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,8,0.8) 0%, transparent 50%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  .gallery-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .gallery-empty {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .gallery-empty-icon {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--border);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-style: italic;
+  }
+
+  /* COLOR GRADE */
+  #colorgrade {
+    background: var(--surface);
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-top: 3rem;
+  }
+
+  .compare-slider {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    cursor: col-resize;
+    user-select: none;
+   background: var(--surface2);
+   container-type: inline-size;
+  }
+  .compare-slider .layer {
+   position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .layer-after {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+   width: 50%;
+  x}
+  .layer-after-inner {
+    position: absolute;
+    inset: 0;
+    width: 100cqw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .compare-divider {
+    position: absolute;
+   top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    z-index: 10;
+    cursor: col-resize;
+    transform: translateX(-50%);
+  }
+  .compare-handle {
+   position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+   background: var(--accent);
+   display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 4px rgba(200,169,110,0.2);
+  }
+  .handle-arrows {
+    color: var(--bg);
+    font-size: 10px;
+    font-family: var(--font-mono);
+    letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .compare-badge-wrap {
+   position: absolute;
+    bottom: 0.75rem;
+   left: 0; right: 0;
+   display: flex;
+    justify-content: space-between;
+   padding: 0 0.75rem;
+    pointer-events: none;
+   z-index: 5;
+  }
+  .compare-badge {
+    font-size: 8px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+   background: rgba(10,10,8,0.85);
+    border: 1px solid var(--border);
+  }
+  .compare-badge.after { border-color: var(--accent); color: var(--accent); }
+  
+
+  .frame-icon {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-style: italic;
+    color: var(--surface);
+  }
+
+  /* EQUIPMENT */
+  #equipment {
+    background: var(--bg);
+  }
+
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .equip-category {
+    background: var(--surface);
+    padding: 2rem;
+  }
+
+  .equip-cat-title {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .equip-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .equip-list li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .equip-list li::before {
+    content: '—';
+    color: var(--border);
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* BOOKING */
+  #booking {
+    background: var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #booking::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,169,110,0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .booking-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .booking-info p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.9;
+    margin-bottom: 2rem;
+  }
+
+  .booking-info ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .booking-info li {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .booking-info li::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.85rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23c8a96e'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
+  .form-group select option {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.7;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .btn-submit {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 1rem 2rem;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    align-self: flex-start;
+  }
+
+  .btn-submit:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .foot-logo {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  footer p {
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+  }
+
+  footer nav {
+    position: static;
+    padding: 0;
+    background: transparent;
+    backdrop-filter: none;
+    gap: 2rem;
+  }
+
+  footer nav a {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+
+  footer nav a:hover { color: var(--accent); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,8,0.92);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    max-width: 480px;
+    width: 90%;
+    padding: 3rem;
+    position: relative;
+    animation: fadeUp 0.3s ease;
+  }
+
+  .modal h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--accent2);
+    margin-bottom: 0.75rem;
+  }
+
+  .modal p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    transition: color 0.3s;
+  }
+
+  .modal-close:hover { color: var(--accent); }
+
+  .success-msg {
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--accent);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-top: 1rem;
+  }
+
+  .success-msg.show { display: flex; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.25rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #about { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr !important; }
+    .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+    .compare-grid { grid-template-columns: 1fr; }
+    .booking-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  }
+
+  /* CURSOR GLOW */
+  .cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: opacity 0.3s;
+  }
+  
+/* CLAUDE CHANGER LANGUE */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lang-switcher a {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  transition: all 0.25s;
+}
+
+.lang-switcher a:hover { color: var(--accent); }
+
+.lang-switcher a.active {
+  color: var(--accent);
+  border-color: rgba(200,169,110,0.2);
+}
+
+.lang-switcher span {
+  color: rgba(200,169,110,0.2);
+  font-size: 9px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Laurelli_prod</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Signature</a></li>
+    <li><a href="#colorgrade">Color</a></li>
+    <li><a href="#equipment">Equipment</a></li>
+    <li><a href="galerie.html">Gallery</a></li>
+  </ul>
+  <div class="nav-right">
+  <div class="lang-switcher">
+    <a href="index.html" class="active">ES</a>
+    <span>·</span>
+    <a href="fr.html">FR</a>
+    <span>·</span>
+    <a href="en.html">EN</a>
+  </div>
+  <a href="#booking" class="nav-cta">Book Now</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line"></div>
+  <div class="hero-eyebrow">Videografía · Drones · Color Grading</div>
+  <h1 class="hero-title">
+    Videógrafo<br>
+    <em>Colorista Y Editor</em>
+  </h1>
+  <p class="hero-sub">
+    Cinematografía aérea y terrestre.<br>
+    Edición y colorización profesional.<br>
+    Cada frame, una decisión.
+  </p>
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div>
+    <div class="section-label">Acerca de mí</div>
+    <h2 class="section-title">Visión<br><em style="font-style:italic; color:var(--accent)">Integral</em></h2>
+    <p style="color:var(--muted); font-size:11px; line-height:1.9; margin-bottom:1.5rem;">
+      Soy Raphaël Laurelli. Opero en la intersección entre la dirección de fotografía tradicional y la cinematografía aérea. Controlo todo el ecosistema visual del proyecto: desde la captura estabilizada y el pilotaje FPV de precisión, hasta la edición y el etalonaje final.
+    </p>
+    <p style="color:var(--muted); font-size:11px; line-height:1.9;">
+      Esta visión global me permite mantener una coherencia absoluta en la imagen. Ya sea rodando en tierra o en el aire, estructuro cada plano pensando en el montaje y en el color grading posterior, garantizando un flujo de trabajo óptimo y una estética cinematográfica con identidad propia.
+    </p>
+  </div>
+  <div class="about-stats">
+    <div class="stat">
+      <span class="stat-num">Super35, 6.2K</span>
+      <span class="stat-label">SENSOR PRINCIPAL</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">10-Bit 4:2:2</span>
+      <span class="stat-label">PROFUNDIDAD DE COLOR</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">Dji Mini 4 Pro & FPV</span>
+      <span class="stat-label">Una perspectiva aérea</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">FLOG2 and BRAW</span>
+      <span class="stat-label">FLUJO DE TRABAJO</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Servicios</div>
+  <h2 class="section-title">¿Qué puedo hacer<br>por tu proyecto?</h2>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">I.</span>
+      <div class="service-title">Recorrido Inmersivo</div>
+      <p class="service-desc">Recorridos fluidos que combinan planos aéreos de gran altitud, tomas terrestres estabilizadas y la magia del "fly-through" con drones FPV. Transiciones perfectas desde el exterior hasta el interior de las estancias. Ideal para el sector inmobiliario y hotelero de alto nivel..</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">II.</span>
+      <div class="service-title">Perfil Corporativo</div>
+      <p class="service-desc">Entrevistas a cámara con iluminación cuidada y captura de audio direccional aislado para eliminar ruidos externos. Acompañado de planos de recurso (B-roll) fluidos que ilustran el entorno laboral. La solución perfecta para potenciar la imagen y confianza de empresas o artesanos.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">III.</span>
+      <div class="service-title">Acción & Adrenalina</div>
+      <p class="service-desc">Persecuciones a alta velocidad y seguimiento cercano con drones FPV y cámaras de acción. Capturamos la esencia del movimiento con perspectivas extremas y un montaje vertical u horizontal de alto impacto. Diseñado para automovilismo, deportes extremos y eventos vibrantes.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">IV.</span>
+      <div class="service-title">Cine Promocional Premium</div>
+      <p class="service-desc">La máxima expresión visual para tu marca. Combinación integral de cinematografía terrestre y aérea, captura de imagen en alta fidelidad con formatos profesionales y un etalonaje cinematográfico. Una narrativa completa y a medida para campañas publicitarias muy exigentes.</p>
+      <div class="service-price">Consultar disponibilidad →</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label">Gallery</div>
+  <h2 class="section-title">Trabajos<br><em style="font-style:italic; color:var(--accent)">destacados</em></h2>
+  <p style="color:var(--muted); font-size:11px; margin-bottom:0; margin-top:-0.5rem;">Algunos clips extraídos de proyectos pasados</p>
+
+  <div class="gallery-grid">
+    <div class="gallery-item">
+    <div class="gallery-placeholder" style="padding: 0; overflow: hidden;">
+        <video autoplay loop muted playsinline preload="none" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
+            <source src="Fato.mp4" type="video/mp4">
+        </video>
+    </div>
+      <div class="gallery-overlay"><span class="gallery-label">Faro Favaritx</span></div>
+    </div>
+     <div class="gallery-item" style="position:relative;">
+  <div class="gallery-placeholder" style="padding:0; overflow:hidden; position:relative;">
+    <video id="vid1" loop muted autoplay playsinline preload="none"
+      style="width:100%;height:100%;object-fit:cover;">
+      <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
+    </video>
+
+    <!-- Contrôles custom -->
+    <div style="position:absolute;bottom:0.75rem;right:0.75rem;display:flex;gap:0.5rem;z-index:10;pointer-events:all;">
+      
+      <!-- Bouton son -->
+      <button onclick="toggleMute('vid1', this)"
+        style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+               width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+               align-items:center;justify-content:center;transition:background 0.2s;"
+        title="Son">🔇</button>
+
+      <!-- Bouton plein écran -->
+      <button onclick="goFullscreen('vid1')"
+        style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+               width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+               align-items:center;justify-content:center;transition:background 0.2s;"
+        title="Plein écran">⛶</button>
+    </div>
+  </div>
+    <!-- L'overlay avec le titre de ton clip -->
+    <div class="gallery-overlay" style="pointer-events:none;"><span class="gallery-label">Clip Bless</span></div>
+</div>
+<div class="gallery-item">
+    <div class="gallery-placeholder" style="padding: 0; overflow: hidden; position: relative; background: #000;">
+        <!-- Le vrai lecteur vidéo connecté à ton bucket Cloudflare -->
+        <video width="100%" height="100%" style="object-fit: cover;" controls preload="metadata" poster="lien-vers-ta-miniature.jpg">
+            <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
+            Tu navegador no soporta el formato de video.
+        </video>
+    </div>
+    <!-- L'overlay avec le titre de ton clip -->
+    <div class="gallery-overlay"><span class="gallery-label">Promoción Andalucía</span></div>
+</div>
+</section>
+
+<!-- COLOR GRADE -->
+<section id="colorgrade">
+  <div class="section-label">Color Grade</div>
+  <h2 class="section-title">Antes &<br><em style="font-style:italic;color:var(--accent)">Después</em></h2>
+  <p style="color:var(--muted);font-size:11px;line-height:1.9;margin-bottom:0.5rem;max-width:500px;">
+    Arrastra el divisor para revelar la diferencia. La colorización no es solo estética — es narrativa.
+  </p>
+  <p style="color:rgba(200,169,110,0.5);font-size:10px;letter-spacing:0.1em;margin-bottom:2.5rem;">
+    ↔ Reemplaza los fondos CSS con tus imágenes reales usando las clases <code style="background:var(--surface2);padding:1px 5px;">.layer-before</code> y <code style="background:var(--surface2);padding:1px 5px;">.layer-after-inner</code>
+  </p>
+ 
+  <div class="compare-grid">
+ 
+    <!-- Slider 1 -->
+    <div class="compare-slider reveal" id="cs1">
+      
+        <div class="layer layer-before" style="background:#111;">
+  <video autoplay loop muted playsinline preload="none"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+    <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade%201.mp4" type="video/mp4">
+  </video>
+      </div>
+      <div class="layer-after" id="cs1-after" style="background:#111;">
+          <div class="layer-after-inner" style="background:#111;">
+  <video autoplay loop muted playsinline preload="none"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;">
+    <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade%201.mp4" type="video/mp4">
+  </video>
+</div>
+      </div>
+      <div class="compare-divider" id="cs1-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+    </div>
+ 
+    <!-- Slider 2 -->
+    <div class="compare-slider reveal" id="cs2">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1e1c1a 0%,#2e2820 50%,#1e1c18 100%);">
+        <div class="vis vis-raw">Clip 02</div>
+      </div>
+      <div class="layer-after" id="cs2-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#1a0d10 0%,#2e1a1a 50%,#1a0d0d 100%);">
+          <div class="vis vis-graded">Clip 02</div>
+        </div>
+      </div>
+      <div class="compare-divider" id="cs2-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
+    </div>
+ 
+    <!-- Slider 3 -->
+    <div class="compare-slider reveal" id="cs3">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1a1c1e 0%,#22262e 50%,#181a1e 100%);">
+        <div class="vis vis-raw">Clip 03</div>
+      </div>
+      <div class="layer-after" id="cs3-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#0d1220 0%,#1a2040 50%,#0d1228 100%);">
+          <div class="vis vis-graded">Clip 03</div>
+        </div>
+      </div>
+      <div class="compare-divider" id="cs3-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
+    </div>
+ 
+    <!-- Slider 4 -->
+    <div class="compare-slider reveal" id="cs4">
+      <div class="layer layer-before" style="background:linear-gradient(135deg,#1c1a18 0%,#2a2620 50%,#1c1a14 100%);">
+        <div class="vis vis-raw">Clip 04</div>
+      </div>
+      <div class="layer-after" id="cs4-after" style="width:50%;">
+        <div class="layer-after-inner" style="background:linear-gradient(135deg,#1a1400 0%,#302400 50%,#1a1400 100%);">
+          <div class="vis vis-graded">Clip 04</div>
+        </div>
+      </div>
+      <div class="compare-divider" id="cs4-div" style="left:50%;">
+        <div class="compare-handle"><div class="handle-arrows">◀ ▶</div></div>
+      </div>
+      <div class="compare-badge-wrap">
+        <span class="compare-badge">Antes · RAW</span>
+        <span class="compare-badge after">Después · Grade</span>
+      </div>
+      <span class="note-replace">Reemplaza con imagen real</span>
+    </div>
+ 
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section id="equipment">
+  <div class="section-label">Equipment</div>
+  <h2 class="section-title">Equipo<br><em style="font-style:italic; color:var(--accent)">técnico</em></h2>
+
+  <div class="equipment-grid">
+    <div class="equip-category">
+      <div class="equip-cat-title">Cámara Principal</div>
+      <ul class="equip-list">
+        <li>Fujifilm X-S20 (4K / F-Log2)</li>
+        <li>Objetivo Tokina 17–70mm f/2.8</li>
+        <li>Objetivo XF 55–200mm zoom</li>
+        <li>Objetivo fijo 35mm f/1.7</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Drones</div>
+      <ul class="equip-list">
+        <li>DJI Mini 4 Pro — 4K HDR</li>
+        <li>3 baterías — autonomía extendida</li>
+        <li>Drone FPV — 5 baterías</li>
+        <li>Gafas FPV + mando dedicado</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Soporte & Rig</div>
+      <ul class="equip-list">
+        <li>Gimbal DJI Ronin Mini 3</li>
+        <li>GoPro Hero 9 (cámara de acción)</li>
+        <li>Cage SmallRig + empuñadura superior</li>
+        <li>Trípode SmallRig C180</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Monitorización</div>
+      <ul class="equip-list">
+        <li>Monitor Blackmagic Video Assist 5" 12G</li>
+        <li>Alimentación V-Mount K&F</li>
+        <li>Soporte monitor SmallRig</li>
+        <li>Placa V-Mount SmallRig</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Audio</div>
+      <ul class="equip-list">
+        <li>Micrófono Sennheiser MKE 600</li>
+        <li>Señal directa a cámara</li>
+      </ul>
+    </div>
+    <div class="equip-category">
+      <div class="equip-cat-title">Entrega</div>
+      <ul class="equip-list">
+        <li>4K / FHD según proyecto</li>
+        <li>H.265 / ProRes disponible</li>
+        <li>LUTs personalizadas</li>
+        <li>Archivos RAW bajo petición</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING — conectado a Formspree -->
+<section id="booking">
+  <div class="section-label">Booking</div>
+  <div class="booking-layout">
+    <div class="booking-info reveal">
+      <h2 class="section-title" style="font-size:2.5rem;">Hablemos<br><em style="font-style:italic;color:var(--accent)">de tu proyecto</em></h2>
+      <p>Cuéntame qué tienes en mente. Respondo en menos de 24 horas con disponibilidad y presupuesto orientativo sin compromiso.</p>
+      <ul>
+        <li>Presupuesto sin compromiso</li>
+        <li>Respuesta en menos de 24h</li>
+        <li>Trabajo en toda la región</li>
+        <li>Pack terrestre + aéreo disponible</li>
+        <li>Entrega rápida cuando se necesita</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <form class="booking-form" id="bookingForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-name">Nombre *</label>
+            <input type="text" id="f-name" name="nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="f-email">Email *</label>
+            <input type="email" id="f-email" name="email" placeholder="tu@email.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-phone">Teléfono</label>
+          <input type="tel" id="f-phone" name="telefono" placeholder="+34 000 000 000">
+        </div>
+        <div class="form-group">
+          <label for="f-service">Servicio *</label>
+          <select id="f-service" name="servicio" required>
+            <option value="">— Selecciona un servicio —</option>
+            <option>Videografía Terrestre</option>
+            <option>Cinematografía Aérea (Mini 4 Pro)</option>
+            <option>FPV Dinámico</option>
+            <option>Edición & Post-producción</option>
+            <option>Color Grading</option>
+            <option>Pack Producción Completa</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="f-date">Fecha deseada</label>
+            <input type="date" id="f-date" name="fecha">
+          </div>
+          <div class="form-group">
+            <label for="f-budget">Presupuesto aprox.</label>
+            <select id="f-budget" name="presupuesto">
+              <option value="">— Presupuesto —</option>
+              <option>Menos de 500 €</option>
+              <option>500 – 1.000 €</option>
+              <option>1.000 – 2.500 €</option>
+              <option>2.500 – 5.000 €</option>
+              <option>Más de 5.000 €</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="f-msg">Descripción del proyecto *</label>
+          <textarea id="f-msg" name="descripcion" placeholder="Cuéntame los detalles: localización, duración, uso final..." required></textarea>
+        </div>
+        <!-- Campo anti-spam honeypot -->
+        <input type="text" name="_gotcha" style="display:none">
+        <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Frame & Flight">
+        <button type="submit" class="btn-submit" id="submitBtn"><span>Enviar solicitud</span></button>
+        <div class="form-status" id="formStatus"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Frame & Flight</div>
+  <p>© 2025 · Videografía profesional</p>
+  <nav>
+    <a href="#services">Servicios</a>
+    <a href="#gallery">Galería</a>
+    <a href="#booking">Contacto</a>
+  </nav>
+</footer>
+
+<!-- MODAL SUCCESS -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <span class="modal-icon">✓</span>
+    <h3>Solicitud enviada</h3>
+    <p>Gracias por contactar. He recibido tu solicitud y te responderé con disponibilidad y presupuesto orientativo en menos de 24 horas.</p>
+    <button class="btn-submit" onclick="closeModal()"><span>Cerrar</span></button>
+  </div>
+</div>
+<script>
+  /* ─── REVEAL ON SCROLL ─── */
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+ 
+/* ─── ANIMATED COUNTERS ─── */
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      const suffix = el.dataset.suffix || '';
+      let current = 0;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.round(current) + suffix;
+        if (current >= target) clearInterval(timer);
+      }, 35);
+    });
+    counterObs.unobserve(entry.target);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.about-stats').forEach(el => counterObs.observe(el));
+ 
+/* ─── COMPARE SLIDERS ─── */
+function initSlider(id) {
+  const slider = document.getElementById(id);
+  const after = document.getElementById(id + '-after');
+  const divider = document.getElementById(id + '-div');
+  let dragging = false;
+ 
+  function setPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = Math.max(2, Math.min(98, ((x - rect.left) / rect.width) * 100));
+    after.style.width = pct + '%';
+    divider.style.left = pct + '%';
+  }
+ 
+  divider.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+  slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+ 
+  divider.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, {passive:false});
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive:true});
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+['cs1','cs2','cs3','cs4'].forEach(initSlider);
+</script>
+<script>
+  document.addEventListener('mousemove', (e) => {
+    const glow = document.getElementById('cursorGlow');
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  function submitForm() {
+    const name = document.getElementById('f-name').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const service = document.getElementById('f-service').value;
+
+    if (!name || !email || !service) {
+      alert('Por favor completa los campos obligatorios: nombre, email y servicio.');
+      return;
+    }
+
+    document.getElementById('successMsg').classList.add('show');
+    document.getElementById('modal').classList.add('open');
+    document.getElementById('bookingForm').reset();
+    document.getElementById('successMsg').classList.remove('show');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .equip-category, .stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+<script>
+function lancerPleinEcran() {
+    var video = document.getElementById("monClipMusical");
+
+    // 1. On affiche les contrôles (pour que l'utilisateur puisse régler le son ou quitter)
+    video.setAttribute("controls", "controls");
+
+    // 2. On lance la lecture de la musique
+    video.play();
+
+    // 3. On force le passage en plein écran (avec les compatibilités pour tous les navigateurs)
+    if (video.requestFullscreen) {
+        video.requestFullscreen();
+    } else if (video.webkitRequestFullscreen) { /* Safari & iPhone */
+        video.webkitRequestFullscreen();
+    } else if (video.msRequestFullscreen) { /* Internet Explorer/Edge ancien */
+        video.msRequestFullscreen();
+    }
+}
+
+// L'astuce Pro : Quand l'utilisateur quitte le plein écran (touche Echap), on met la vidéo en pause !
+document.addEventListener('fullscreenchange', stopperVideo);
+document.addEventListener('webkitfullscreenchange', stopperVideo); // Safari
+
+function stopperVideo() {
+    // Si on n'est plus en plein écran...
+    if (!document.fullscreenElement && !document.webkitIsFullScreen) {
+        var video = document.getElementById("monClipMusical");
+        video.pause(); // On coupe le son et l'image
+        video.removeAttribute("controls"); // On recache l'interface pour retrouver ton beau design
+    }
+}
+</script>
+<script>
+/* ─── FORMSPREE EMAIL ─── */
+document.getElementById('bookingForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  const status = document.getElementById('formStatus');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Enviando...';
+  status.className = 'form-status';
+  status.style.display = 'none';
+ 
+  try {
+    const data = new FormData(this);
+    const res = await fetch('https://formspree.io/f/xgvejqdw', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      this.reset();
+      document.getElementById('modal').classList.add('open');
+    } else {
+      const json = await res.json();
+      throw new Error(json.errors ? json.errors.map(e => e.message).join(', ') : 'Error al enviar');
+    }
+  } catch(err) {
+    status.className = 'form-status error';
+    status.style.display = 'flex';
+    status.innerHTML = '⚠ No se pudo enviar. Escríbeme directamente a <a href="mailto:raphael.laurelli@gmail.com" style="color:inherit;text-decoration:underline;margin-left:4px">raphael.laurelli@gmail.com</a>';
+  } finally {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'Enviar solicitud';
+  }
+});
+</script>
+<script>
+function initSlider(id) {
+  const slider = document.getElementById(id);
+  const after = document.getElementById(id + '-after');
+  const divider = document.getElementById(id + '-div');
+  let dragging = false;
+
+  function setPos(x) {
+    const rect = slider.getBoundingClientRect();
+    let pct = Math.max(2, Math.min(98, ((x - rect.left) / rect.width) * 100));
+    after.style.width = pct + '%';
+    divider.style.left = pct + '%';
+  }
+
+  divider.addEventListener('mousedown', e => { dragging = true; e.preventDefault(); });
+  slider.addEventListener('mousedown', e => { dragging = true; setPos(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+  divider.addEventListener('touchstart', e => { dragging = true; e.preventDefault(); }, {passive: false});
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, {passive: true});
+  window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, {passive: true});
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+['cs1','cs2','cs3','cs4'].forEach(initSlider);
+</script>
+
+<script>
+function toggleMute(videoId, btn) {
+  const vid = document.getElementById(videoId);
+  vid.muted = !vid.muted;
+  btn.textContent = vid.muted ? '🔇' : '🔊';
+}
+
+function goFullscreen(videoId) {
+  const vid = document.getElementById(videoId);
+  if (vid.requestFullscreen) vid.requestFullscreen();
+  else if (vid.webkitRequestFullscreen) vid.webkitRequestFullscreen();
+  else if (vid.mozRequestFullScreen) vid.mozRequestFullScreen();
+}
+</script>
+
+</body>
+</html>
