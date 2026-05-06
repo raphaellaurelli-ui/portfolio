@@ -820,6 +820,42 @@
     z-index: 0;
     transition: opacity 0.3s;
   }
+  
+/* CLAUDE CHANGER LANGUE */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.lang-switcher a {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 3px 6px;
+  border: 1px solid transparent;
+  transition: all 0.25s;
+}
+
+.lang-switcher a:hover { color: var(--accent); }
+
+.lang-switcher a.active {
+  color: var(--accent);
+  border-color: rgba(200,169,110,0.2);
+}
+
+.lang-switcher span {
+  color: rgba(200,169,110,0.2);
+  font-size: 9px;
+}
+
 </style>
 </head>
 <body>
@@ -1083,7 +1119,7 @@
 <!-- EQUIPMENT -->
 <section id="equipment">
   <div class="section-label">Equipment</div>
-  <h2 class="section-title">Arsenal<br><em style="font-style:italic; color:var(--accent)">técnico</em></h2>
+  <h2 class="section-title">Equipo<br><em style="font-style:italic; color:var(--accent)">técnico</em></h2>
 
   <div class="equipment-grid">
     <div class="equip-category">
