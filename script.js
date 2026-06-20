@@ -152,7 +152,7 @@ if (bookingForm) {
 
     try {
       const data = new FormData(this);
-      const res = await fetch('https://formspree.io/f/xgvejqdw', {
+      const res = await fetch('https://formspree.io/f/mvzjpkzq', {
         method: 'POST',
         body: data,
         headers: { 'Accept': 'application/json' }
