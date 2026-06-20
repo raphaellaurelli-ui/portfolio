@@ -165,10 +165,10 @@ if (bookingForm) {
         throw new Error(json.errors ? json.errors.map(e => e.message).join(', ') : 'Error');
       }
     } catch(err) {
-      const fallbackMsg = btn.dataset.fallback || 'raphael.laurelli@gmail.com';
+      const fallbackMsg = btn.dataset.fallback || 'raphael@laurelliprod.fr';
       status.className = 'form-status error';
       status.style.display = 'flex';
-      status.innerHTML = `⚠ ${err.message} — <a href="mailto:raphael.laurelli@gmail.com" style="color:inherit;text-decoration:underline;margin-left:4px">${fallbackMsg}</a>`;
+      status.innerHTML = `⚠ ${err.message} — <a href="mailto:raphael@laurelliprod.fr" style="color:inherit;text-decoration:underline;margin-left:4px">${fallbackMsg}</a>`;
     } finally {
       btn.disabled = false;
       btn.querySelector('span').textContent = sendLabel;
