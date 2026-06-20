@@ -66,7 +66,7 @@ function initSlider(id) {
   window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
   window.addEventListener('touchend', () => { dragging = false; });
 }
-['cs1','cs2','cs3','cs4'].forEach(initSlider);
+['cs1','cs2','cs3','cs4','cs5','cs6'].forEach(initSlider);
 
 /* ── SCROLL ANIMATIONS (service cards, equip, stats) ── */
 const scrollObs = new IntersectionObserver((entries) => {
