@@ -65,6 +65,19 @@ function initSlider(id) {
   slider.addEventListener('touchstart', e => { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
   window.addEventListener('touchmove', e => { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
   window.addEventListener('touchend', () => { dragging = false; });
+
+  /* ── SYNCHRONISATION DES VIDÉOS ── */
+  const videos = slider.querySelectorAll('video');
+  if (videos.length === 2) {
+    const masterVid = videos[0]; 
+    const slaveVid = videos[1];  
+
+    masterVid.addEventListener('timeupdate', () => {
+      if (Math.abs(masterVid.currentTime - slaveVid.currentTime) > 0.05) {
+        slaveVid.currentTime = masterVid.currentTime;
+      }
+    });
+  }
 }
 ['cs1','cs2','cs3','cs4','cs5','cs6'].forEach(initSlider);
 
