@@ -151,18 +151,25 @@
             title="Plein écran">⛶</button>
         </div>
       </div>
-      <div class="gallery-overlay" style="pointer-events:none;"><span class="gallery-label">Clip Bless</span></div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-placeholder" style="padding: 0; overflow: hidden; position: relative; background: #000;">
-        <video width="100%" height="100%" style="object-fit: cover;" controls preload="metadata" poster="lien-vers-ta-miniature.jpg">
-          <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
-          Votre navigateur ne supporte pas la vidéo.
+     <div class="gallery-item" style="position:relative;">
+      <div class="gallery-placeholder" style="padding:0; overflow:hidden; position:relative;">
+        <video id="vid1" loop muted autoplay playsinline preload="none"
+          style="width:100%;height:100%;object-fit:cover;">
+          <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/AndalousiePageWeb.mp4" type="video/mp4">
         </video>
+        <div style="position:absolute;bottom:0.75rem;right:0.75rem;display:flex;gap:0.5rem;z-index:10;pointer-events:all;">
+          <button onclick="toggleMute('vid1', this)"
+            style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+                   width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+                   align-items:center;justify-content:center;transition:background 0.2s;"
+            title="Son">🔇</button>
+          <button onclick="goFullscreen('vid1')"
+            style="background:rgba(10,10,8,0.75);border:1px solid var(--accent);color:var(--accent);
+                   width:32px;height:32px;cursor:pointer;font-size:13px;display:flex;
+                   align-items:center;justify-content:center;transition:background 0.2s;"
+            title="Plein écran">⛶</button>
+        </div>
       </div>
-      <div class="gallery-overlay"><span class="gallery-label">Promotion Andalousie</span></div>
-    </div>
-  </div>
 </section>
 
 <!-- COLOR GRADE -->
