@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photographie — Laurelli_prod</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a08;
+  --surface: #111110;
+  --surface2: #1a1a18;
+  --accent: #c8a96e;
+  --accent2: #e8d5b0;
+  --text: #f0ece4;
+  --muted: #8a8880;
+  --border: rgba(200,169,110,0.22);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ── NAV MINIMALISTE ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+  pointer-events: none;
+}
+
+nav > * { pointer-events: auto; }
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-btn {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: rgba(10,10,8,0.75);
+  backdrop-filter: blur(6px);
+  color: var(--muted);
+  padding: 0.5rem 1.2rem;
+  transition: all 0.3s;
+}
+
+.nav-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.nav-btn.primary {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.nav-btn.primary:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ── TRACK DE SCROLL (HAUTEUR CALCULÉE EN JS SELON LE NOMBRE DE PHOTOS) ── */
+#scroll-track {
+  position: relative;
+  width: 100%;
+}
+
+/* ── SCÈNE FIXE PLEIN ÉCRAN PILOTÉE PAR LE SCROLL ── */
+#viewport-stage {
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1400px;
+  background: radial-gradient(circle at 50% 50%, #141310 0%, #0a0a08 75%);
+}
+
+/* Viseur discret aux coins */
+.hud-corner {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(200,169,110,0.35);
+  border-style: solid;
+  pointer-events: none;
+  z-index: 40;
+}
+.hud-tl { top: 5.5rem; left: 3rem; border-width: 1px 0 0 1px; }
+.hud-tr { top: 5.5rem; right: 3rem; border-width: 1px 1px 0 0; }
+.hud-bl { bottom: 5.5rem; left: 3rem; border-width: 0 0 1px 1px; }
+.hud-br { bottom: 5.5rem; right: 3rem; border-width: 0 1px 1px 0; }
+
+/* ── SLIDES PHOTO 3D ── */
+.photo-slide {
+  position: absolute;
+  width: min(76vw, 1080px);
+  height: min(64vh, 660px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity, filter;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.photo-slide.portrait {
+  width: min(44vw, 480px);
+  height: min(68vh, 680px);
+}
+
+.photo-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(200,169,110,0.25);
+  background: var(--surface2);
+  box-shadow: 0 30px 90px rgba(0,0,0,0.85);
+}
+
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Placeholder visuel */
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(145deg, #1b1a16 0%, #0e0e0c 100%);
+  color: var(--muted);
+}
+
+.photo-placeholder span:first-child {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-style: italic;
+  color: var(--accent);
+  opacity: 0.35;
+}
+
+.photo-placeholder span:last-child {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.5;
+}
+
+/* Étiquette minimale superposée en bas du cadre */
+.photo-caption {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 1.5rem 1.75rem 1.25rem;
+  background: linear-gradient(to top, rgba(10,10,8,0.92) 0%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.caption-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--accent2);
+  line-height: 1;
+}
+
+.caption-gear {
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── FILMSTRIP / BANDE DE NAVIGATION EN BAS ── */
+.filmstrip-hud {
+  position: fixed;
+  bottom: 1.75rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 1rem;
+  background: rgba(10,10,8,0.82);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.film-tick {
+  width: 28px;
+  height: 4px;
+  background: rgba(200,169,110,0.22);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.film-tick.active {
+  width: 48px;
+  background: var(--accent);
+}
+
+.film-num {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-left: 0.5rem;
+  min-width: 48px;
+  text-align: right;
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 4.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+  z-index: 50;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+/* ── LIGHTBOX PLEIN ÉCRAN AU CLIC ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,8,0.97);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border: 1px solid var(--border);
+}
+
+.lb-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 2.5rem;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+.lb-close:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 800px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .hud-tl, .hud-bl { left: 1.5rem; }
+  .hud-tr, .hud-br { right: 1.5rem; }
+  .photo-slide, .photo-slide.portrait {
+    width: 88vw;
+    height: 58vh;
+  }
+  .photo-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">Laurelli_prod</a>
+  <div class="nav-right">
+    <a href="index.html" class="nav-btn">← Vidéo</a>
+    <a href="index.html#booking" class="nav-btn primary">Réserver</a>
+  </div>
+</nav>
+
+<!-- VISEUR -->
+<div class="hud-corner hud-tl"></div>
+<div class="hud-corner hud-tr"></div>
+<div class="hud-corner hud-bl"></div>
+<div class="hud-corner hud-br"></div>
+
+<div class="scroll-hint" id="scrollHint">Scroll ↓</div>
+
+<!-- PISTE DE SCROLL -->
+<div id="scroll-track">
+  <div id="viewport-stage">
+
+    <!-- PHOTO 01 -->
+    <div class="photo-slide" onclick="openLightbox(this)">
+      <div class="photo-card">
+        <!-- REMPLACE PAR : <img src="photos/photo1.jpg" alt="Favaritx"> -->
+        <div class="photo-placeholder">
+          <span>01</span>
+          <span>Photo 01 · Paysage</span>
+        </div>
+        <div class="photo-caption">
+          <div class="caption-title">Favaritx</div>
+          <div class="caption-gear">DJI Mini 4 Pro · 24mm f/1.7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO 02 (Portrait) -->
+    <div class="photo-slide portrait" onclick="openLightbox(this)">
+      <div class="photo-card">
+        <!-- REMPLACE PAR : <img src="photos/photo2.jpg" alt="Silhouette"> -->
+        <div class="photo-placeholder">
+          <span>02</span>
+          <span>Photo 02 · Portrait</span>
+        </div>
+        <div class="photo-caption">
+          <div class="caption-title">Golden Hour</div>
+          <div class="caption-gear">Fujifilm X-S20 · 35mm f/1.7</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO 03 -->
+    <div class="photo-slide" onclick="openLightbox(this)">
+      <div class="photo-card">
+        <!-- REMPLACE PAR : <img src="photos/photo3.jpg" alt="Anamorphic"> -->
+        <div class="photo-placeholder">
+          <span>03</span>
+          <span>Photo 03 · Anamorphique</span>
+        </div>
+        <div class="photo-caption">
+          <div class="caption-title">2.39:1 Frame</div>
+          <div class="caption-gear">X-S20 · Anamorphic 24mm T/1.4</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO 04 -->
+    <div class="photo-slide" onclick="openLightbox(this)">
+      <div class="photo-card">
+        <!-- REMPLACE PAR : <img src="photos/photo4.jpg" alt="Andalousie"> -->
+        <div class="photo-placeholder">
+          <span>04</span>
+          <span>Photo 04 · Paysage</span>
+        </div>
+        <div class="photo-caption">
+          <div class="caption-title">Sur</div>
+          <div class="caption-gear">X-S20 · Tamron 17–70mm f/2.8</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO 05 (Portrait) -->
+    <div class="photo-slide portrait" onclick="openLightbox(this)">
+      <div class="photo-card">
+        <!-- REMPLACE PAR : <img src="photos/photo5.jpg" alt="Nuit"> -->
+        <div class="photo-placeholder">
+          <span>05</span>
+          <span>Photo 05 · Portrait</span>
+        </div>
+        <div class="photo-caption">
+          <div class="caption-title">Nocturne</div>
+          <div class="caption-gear">X-S20 · 35mm f/1.7</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- INDICATEUR FILMSTRIP EN BAS -->
+<div class="filmstrip-hud" id="filmstripHud">
+  <div id="ticksContainer" style="display:flex;gap:0.5rem;align-items:center;"></div>
+  <span class="film-num" id="filmNum">01 / 05</span>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div id="lbTarget"></div>
+</div>
+
+<script>
+const track = document.getElementById('scroll-track');
+const slides = Array.from(document.querySelectorAll('.photo-slide'));
+const total = slides.length;
+const ticksContainer = document.getElementById('ticksContainer');
+const filmNum = document.getElementById('filmNum');
+const scrollHint = document.getElementById('scrollHint');
+
+// 1. Ajuste automatiquement la hauteur de scroll selon le nombre de photos
+const vhPerSlide = 115; // distance de scroll par photo
+track.style.height = `${total * vhPerSlide}vh`;
+
+// 2. Génère les repères de pellicule en bas
+slides.forEach((_, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'film-tick' + (i === 0 ? ' active' : '');
+  btn.setAttribute('aria-label', `Photo ${i + 1}`);
+  btn.onclick = () => {
+    const maxScroll = track.offsetHeight - window.innerHeight;
+    const targetY = (i / (total - 1)) * maxScroll;
+    window.scrollTo({ top: targetY, behavior: 'smooth' });
+  };
+  ticksContainer.appendChild(btn);
+});
+const ticks = Array.from(document.querySelectorAll('.film-tick'));
+
+// 3. Moteur d'animation continu lié au scroll (avec inertie fluide)
+let currentProgress = 0;
+let targetProgress = 0;
+
+window.addEventListener('scroll', () => {
+  const maxScroll = track.offsetHeight - window.innerHeight;
+  targetProgress = maxScroll > 0 ? Math.max(0, Math.min(1, window.scrollY / maxScroll)) : 0;
+  if (window.scrollY > 40 && scrollHint) scrollHint.style.opacity = '0';
+}, { passive: true });
+
+function animateStage() {
+  // Lissage (lerp) pour un rendu ultra-fluide à la molette
+  currentProgress += (targetProgress - currentProgress) * 0.1;
+
+  const exactIndex = currentProgress * (total - 1);
+  const activeIndex = Math.round(exactIndex);
+
+  // Mise à jour du compteur & de la pellicule
+  filmNum.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+  ticks.forEach((t, idx) => t.classList.toggle('active', idx === activeIndex));
+
+  // Transformation 3D de chaque photo selon sa distance au scroll actuel
+  slides.forEach((slide, i) => {
+    const delta = i - exactIndex; // 0 = photo au premier plan, >0 = arrive du fond, <0 = sort vers l'avant/côté
+    const absDelta = Math.abs(delta);
+
+    if (absDelta > 1.8) {
+      slide.style.opacity = 0;
+      slide.style.pointerEvents = 'none';
+      return;
+    }
+
+    let translateZ = 0;
+    let translateY = 0;
+    let rotateX = 0;
+    let scale = 1;
+    let opacity = 1;
+    let blur = 0;
+
+    if (delta >= 0) {
+      // Photos à venir : émergent de la profondeur (Z négatif) vers l'avant
+      translateZ = -delta * 420;
+      translateY = delta * 55;
+      rotateX = delta * 6;
+      scale = 1 - delta * 0.12;
+      opacity = Math.max(0, 1 - delta * 0.75);
+      blur = delta * 4;
+    } else {
+      // Photos passées : glissent vers le haut et s'effacent
+      translateZ = -delta * 180;
+      translateY = delta * 340;
+      rotateX = delta * 8;
+      scale = 1 + Math.abs(delta) * 0.08;
+      opacity = Math.max(0, 1 - Math.abs(delta) * 1.35);
+      blur = Math.abs(delta) * 3;
+    }
+
+    slide.style.transform = `translate3d(0, ${translateY}px, ${translateZ}px) rotateX(${rotateX}deg) scale(${scale})`;
+    slide.style.opacity = opacity;
+    slide.style.filter = blur > 0.2 ? `blur(${blur.toFixed(1)}px)` : 'none';
+    slide.style.zIndex = Math.round(50 - absDelta * 10);
+    slide.style.pointerEvents = absDelta < 0.35 ? 'auto' : 'none';
+  });
+
+  requestAnimationFrame(animateStage);
+}
+
+requestAnimationFrame(animateStage);
+
+// 4. Lightbox au clic sur la photo active
+function openLightbox(slideEl) {
+  const img = slideEl.querySelector('img');
+  if (!img) return;
+  document.getElementById('lbTarget').innerHTML = `<img src="${img.src}" alt="${img.alt}">`;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>
