@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Laurelli_prod — Videógrafo, Colorista y Editor</title>
+<meta name="description" content="Portafolio de Raphaël Laurelli (Laurelli_prod). Cinematografía aérea FPV y con dron, rodaje terrestre, montaje y etalonaje cinematográfico.">
+<meta name="theme-color" content="#090908">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="film-grain" aria-hidden="true"></div>
+<div id="reticle" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav class="site-nav" id="siteNav">
+  <a href="#hero" class="nav-logo">Laurelli_prod</a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#gallery">Firma</a></li>
+    <li><a href="#colorgrade">Color</a></li>
+    <li><a href="#equipment">Equipo</a></li>
+    <li><a href="galerie.html">Galería Fotográfica</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-switcher">
+      <a href="index.html">FR</a>
+      <span>·</span>
+      <a href="en.html">EN</a>
+      <span>·</span>
+      <a href="es.html" class="active">ES</a>
+    </div>
+    <a href="#booking" class="nav-cta">Reservar</a>
+    <button class="nav-burger" onclick="openDrawer()" aria-label="Abrir menú">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+  <div class="mobile-drawer-top">
+    <span class="nav-logo">Laurelli_prod</span>
+    <button class="mobile-drawer-close" onclick="closeDrawer()" aria-label="Cerrar menú">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <ul class="mobile-drawer-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#services">Servicios</a></li>
+    <li><a href="#gallery">Firma</a></li>
+    <li><a href="#colorgrade">Color Grading</a></li>
+    <li><a href="#equipment">Equipo</a></li>
+    <li><a href="galerie.html">Galería Fotográfica</a></li>
+    <li><a href="#booking">Reservar</a></li>
+  </ul>
+  <div class="mobile-drawer-footer">
+    <div class="lang-switcher">
+      <a href="index.html">FR</a>
+      <span>·</span>
+      <a href="en.html">EN</a>
+      <span>·</span>
+      <a href="es.html" class="active">ES</a>
+    </div>
+    <a href="mailto:raphael@laurelliprod.fr" style="font-size:10px;color:var(--accent);">raphael@laurelliprod.fr</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-media" aria-hidden="true">
+    <video class="hero-video" autoplay loop muted playsinline preload="metadata">
+      <source src="Fato.mp4" type="video/mp4">
+    </video>
+    <div class="hero-vignette"></div>
+  </div>
+
+  <div class="vf-frame" aria-hidden="true">
+    <span class="vf-corner tl"></span>
+    <span class="vf-corner tr"></span>
+    <span class="vf-corner bl"></span>
+    <span class="vf-corner br"></span>
+  </div>
+
+  <div class="hero-telemetry" aria-hidden="true">
+    <span class="rec-dot">REC</span>
+    <span>24.00 FPS</span>
+    <span>F-LOG2 · 6.2K</span>
+    <span id="heroTimecode">01:00:00:00</span>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-line"></div>
+    <div class="hero-eyebrow">Videografía · Drones · Color Grading</div>
+    <h1 class="hero-title">
+      Videógrafo<br>
+      <em>Colorista &amp; Editor</em>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">
+        Cinematografía aérea y terrestre.<br>
+        Edición y colorización profesional.<br>
+        Cada frame, una decisión.
+      </p>
+      <div class="hero-actions">
+        <a href="#gallery" class="btn-primary">
+          <span>Ver obras seleccionadas</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="galerie.html" class="btn-ghost">Galería Fotográfica</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true">Deslizar</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner about-grid">
+    <div class="reveal">
+      <div class="section-label">Sobre mí</div>
+      <h2 class="section-title">Visión<br><em>Integral</em></h2>
+      <p class="about-copy">
+        Soy Raphaël Laurelli. Opero en la intersección entre la dirección de fotografía tradicional y la cinematografía aérea. Controlo todo el ecosistema visual del proyecto: desde la captura estabilizada y el pilotaje FPV de precisión, hasta la edición y el etalonaje final.
+      </p>
+      <p class="about-copy">
+        Esta visión global me permite mantener una coherencia absoluta en la imagen. Ya sea rodando en tierra o en el aire, estructuro cada plano pensando en el montaje y en el color grading posterior, garantizando un flujo de trabajo óptimo y una estética cinematográfica con identidad propia.
+      </p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat">
+        <span class="stat-num">Super35 · 6.2K</span>
+        <span class="stat-label">Sensor Principal</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">10-Bit 4:2:2</span>
+        <span class="stat-label">Profundidad de Color</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">Mini 4 Pro &amp; FPV</span>
+        <span class="stat-label">Perspectiva Aérea</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">F-Log2 &amp; BRAW</span>
+        <span class="stat-label">Flujo de Trabajo</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-inner">
+    <div class="section-label">Servicios</div>
+    <h2 class="section-title">¿Qué puedo hacer<br><em>por tu proyecto?</em></h2>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div>
+          <span class="service-icon">I.</span>
+          <div class="service-title">Recorrido Inmersivo</div>
+          <p class="service-desc">Recorridos fluidos que combinan planos aéreos de gran altitud, tomas terrestres estabilizadas y la magia del "fly-through" con drones FPV. Transiciones perfectas desde el exterior hasta el interior de las estancias. Ideal para el sector inmobiliario y hotelero de alto nivel.</p>
+        </div>
+        <button type="button" class="service-action" data-service-index="3">
+          <span>Consultar disponibilidad</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="service-card reveal">
+        <div>
+          <span class="service-icon">II.</span>
+          <div class="service-title">Perfil Corporativo</div>
+          <p class="service-desc">Entrevistas a cámara con iluminación cuidada y captura de audio direccional aislado para eliminar ruidos externos. Acompañado de planos de recurso (B-roll) fluidos que ilustran el entorno laboral. La solución perfecta para potenciar la imagen y confianza de empresas o artesanos.</p>
+        </div>
+        <button type="button" class="service-action" data-service-index="1">
+          <span>Consultar disponibilidad</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="service-card reveal">
+        <div>
+          <span class="service-icon">III.</span>
+          <div class="service-title">Acción &amp; Adrenalina</div>
+          <p class="service-desc">Persecuciones a alta velocidad y seguimiento cercano con drones FPV y cámaras de acción. Capturamos la esencia del movimiento con perspectivas extremas y un montaje vertical u horizontal de alto impacto. Diseñado para automovilismo, deportes extremos y eventos vibrantes.</p>
+        </div>
+        <button type="button" class="service-action" data-service-index="3">
+          <span>Consultar disponibilidad</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+      <div class="service-card reveal">
+        <div>
+          <span class="service-icon">IV.</span>
+          <div class="service-title">Cine Promocional Premium</div>
+          <p class="service-desc">La máxima expresión visual para tu marca. Combinación integral de cinematografía terrestre y aérea, captura de imagen en alta fidelidad con formatos profesionales y un etalonaje cinematográfico. Una narrativa completa y a medida para campañas publicitarias muy exigentes.</p>
+        </div>
+        <button type="button" class="service-action" data-service-index="6">
+          <span>Consultar disponibilidad</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="gallery-header">
+      <div>
+        <div class="section-label">Firma</div>
+        <h2 class="section-title">Obras<br><em>realizadas</em></h2>
+        <p class="section-lead">Algunos extractos seleccionados de proyectos pasados. Abre el modo sala oscura para verlos en grande con sonido.</p>
+      </div>
+      <a href="galerie.html" class="btn-ghost">Explorar Galería Fotográfica →</a>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <div class="gallery-media">
+          <video id="vid0" autoplay loop muted playsinline preload="metadata" data-autoplay-visible>
+            <source src="Fato.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-meta">
+            <span class="gallery-index">01 · Aéreo y Costa</span>
+            <span class="gallery-label">Faro de Favaritx</span>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button type="button" class="vid-btn" onclick="openCinemaModal('Fato.mp4', 'Faro de Favaritx')" title="Ver en sala" aria-label="Ver Faro de Favaritx">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <button type="button" class="vid-btn" onclick="goFullscreen('vid0')" title="Pantalla completa" aria-label="Pantalla completa">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <div class="gallery-media">
+          <video id="vid1" loop muted autoplay playsinline preload="metadata" data-autoplay-visible>
+            <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-meta">
+            <span class="gallery-index">02 · Videoclip</span>
+            <span class="gallery-label">Bless Clip</span>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button type="button" class="vid-btn" onclick="toggleMute('vid1', this)" title="Sonido" aria-label="Activar o silenciar sonido" aria-pressed="false">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          </button>
+          <button type="button" class="vid-btn" onclick="openCinemaModal('https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Clip_plus_opti.mp4', 'Bless Clip')" title="Ver en sala" aria-label="Ver Bless Clip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <button type="button" class="vid-btn" onclick="goFullscreen('vid1')" title="Pantalla completa" aria-label="Pantalla completa">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal">
+        <div class="gallery-media">
+          <video id="vid2" loop muted autoplay playsinline preload="metadata" data-autoplay-visible>
+            <source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/AndalousiePageWeb.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="gallery-overlay">
+          <div class="gallery-meta">
+            <span class="gallery-index">03 · Relato Visual</span>
+            <span class="gallery-label">Andalucía</span>
+          </div>
+        </div>
+        <div class="video-controls">
+          <button type="button" class="vid-btn" onclick="toggleMute('vid2', this)" title="Sonido" aria-label="Activar o silenciar sonido" aria-pressed="false">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+          </button>
+          <button type="button" class="vid-btn" onclick="openCinemaModal('https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/AndalousiePageWeb.mp4', 'Andalucía')" title="Ver en sala" aria-label="Ver Andalucía">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          </button>
+          <button type="button" class="vid-btn" onclick="goFullscreen('vid2')" title="Pantalla completa" aria-label="Pantalla completa">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR GRADE -->
+<section id="colorgrade">
+  <div class="section-inner">
+    <div class="compare-header">
+      <div>
+        <div class="section-label">Color Grade</div>
+        <h2 class="section-title">Antes &amp;<br><em>Después</em></h2>
+        <p class="section-lead">Arrastra el divisor para revelar la transformación cuadro a cuadro. La colorización no es solo estética — es narrativa.</p>
+      </div>
+      <div class="compare-spec-pill">F-Log2 / BRAW → Rec.709 Print</div>
+    </div>
+
+    <div class="compare-grid">
+      <!-- Slider 1 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 01" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade1.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade1.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 01</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider 2 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 02" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade2.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade2.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 02</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider 3 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 03" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade3.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade3.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 03</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider 4 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 04" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade4.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade4.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 04</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider 5 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 05" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade5.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade5.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 05</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider 6 -->
+      <div class="compare-card reveal">
+        <div class="compare-slider" role="slider" tabindex="0" aria-label="Comparación de color Escena 06" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <div class="layer layer-before">
+            <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/Grade6.mp4" type="video/mp4"></video>
+          </div>
+          <div class="layer-after">
+            <div class="layer-after-inner">
+              <video loop muted playsinline preload="metadata"><source src="https://pub-1edba0ea3a7d4b9d93a74c6401587957.r2.dev/NonGrade6.mp4" type="video/mp4"></video>
+            </div>
+          </div>
+          <div class="compare-divider" style="left:50%;"><div class="compare-handle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="15 18 9 12 15 6"/></svg><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="9 18 15 12 9 6"/></svg></div></div>
+          <div class="compare-badge-wrap"><span class="compare-badge">Antes · RAW</span><span class="compare-badge after">Después · Grade</span></div>
+        </div>
+        <div class="compare-toolbar">
+          <span class="compare-scene-name">Escena 06</span>
+          <div class="compare-presets">
+            <button type="button" class="preset-btn" data-pct="98">RAW</button>
+            <button type="button" class="preset-btn active" data-pct="50">50/50</button>
+            <button type="button" class="preset-btn" data-pct="2">Grade</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPMENT -->
+<section id="equipment">
+  <div class="section-inner">
+    <div class="section-label">Equipo</div>
+    <h2 class="section-title">Arsenal<br><em>técnico</em></h2>
+
+    <div class="equipment-grid">
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Cámara Principal</div>
+        <ul class="equip-list">
+          <li>Fujifilm X-S20 (6.2K / F-Log2)</li>
+          <li>Objetivo Tamron 17–70mm f/2.8</li>
+          <li>Objetivo XF 55–200mm zoom</li>
+          <li>Objetivo fijo 35mm f/1.7</li>
+          <li>Objetivo Anamórfico 1.33x 24mm T/1.4</li>
+        </ul>
+      </div>
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Drones</div>
+        <ul class="equip-list">
+          <li>DJI Mini 4 Pro — 4K HDR</li>
+          <li>3 baterías — autonomía extendida</li>
+          <li>Drone FPV — 5 baterías</li>
+          <li>Gafas FPV + mando dedicado</li>
+        </ul>
+      </div>
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Soporte &amp; Rig</div>
+        <ul class="equip-list">
+          <li>Gimbal DJI Ronin Mini 3</li>
+          <li>GoPro Hero 9 (cámara de acción)</li>
+          <li>Cage SmallRig + empuñadura superior</li>
+          <li>Trípode SmallRig C180</li>
+        </ul>
+      </div>
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Monitorización</div>
+        <ul class="equip-list">
+          <li>Monitor Blackmagic Video Assist 5" 12G</li>
+          <li>Alimentación V-Mount K&amp;F</li>
+          <li>2 alimentaciones para monitor</li>
+          <li>Soporte monitor SmallRig</li>
+          <li>Placa V-Mount SmallRig</li>
+        </ul>
+      </div>
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Audio</div>
+        <ul class="equip-list">
+          <li>Micrófono Sennheiser MKE 600</li>
+          <li>Señal directa a cámara</li>
+        </ul>
+      </div>
+      <div class="equip-category reveal">
+        <div class="equip-cat-title">Entrega</div>
+        <ul class="equip-list">
+          <li>4K / FHD según proyecto</li>
+          <li>H.265 / ProRes / BRAW disponible</li>
+          <li>LUTs personalizadas</li>
+          <li>Archivos RAW bajo petición</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="section-inner">
+    <div class="section-label">Reserva</div>
+    <div class="booking-layout">
+      <div class="booking-info reveal">
+        <h2 class="section-title">Hablemos<br><em>de tu proyecto</em></h2>
+        <p>Cuéntame qué tienes en mente. Respondo en menos de 24 horas con disponibilidad y presupuesto orientativo sin compromiso.</p>
+        <ul>
+          <li>Presupuesto sin compromiso</li>
+          <li>Respuesta en menos de 24h</li>
+          <li>Trabajo en toda la región</li>
+          <li>Pack terrestre + aéreo disponible</li>
+          <li>Entrega rápida cuando se necesita</li>
+        </ul>
+        <a href="mailto:raphael@laurelliprod.fr" class="booking-direct">raphael@laurelliprod.fr →</a>
+      </div>
+      <div class="reveal">
+        <form class="booking-form" id="bookingForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Nombre *</label>
+              <input type="text" id="f-name" name="nombre" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email *</label>
+              <input type="email" id="f-email" name="email" placeholder="tu@email.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-phone">Teléfono</label>
+            <input type="tel" id="f-phone" name="telefono" placeholder="+34 000 000 000">
+          </div>
+          <div class="form-group">
+            <label for="f-service">Servicio *</label>
+            <select id="f-service" name="servicio" required>
+              <option value="">— Selecciona un servicio —</option>
+              <option>Videografía Terrestre</option>
+              <option>Cinematografía Aérea (Mini 4 Pro)</option>
+              <option>FPV Dinámico</option>
+              <option>Edición &amp; Post-producción</option>
+              <option>Color Grading</option>
+              <option>Pack Producción Completa</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-date">Fecha deseada</label>
+              <input type="date" id="f-date" name="fecha">
+            </div>
+            <div class="form-group">
+              <label for="f-budget">Presupuesto aprox.</label>
+              <select id="f-budget" name="presupuesto">
+                <option value="">— Presupuesto —</option>
+                <option>Menos de 500 €</option>
+                <option>500 – 1.000 €</option>
+                <option>1.000 – 2.500 €</option>
+                <option>2.500 – 5.000 €</option>
+                <option>Más de 5.000 €</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-msg">Descripción del proyecto *</label>
+            <textarea id="f-msg" name="descripcion" placeholder="Cuéntame los detalles: localización, duración, uso final..." required></textarea>
+          </div>
+          <input type="text" name="_gotcha" style="display:none">
+          <input type="hidden" name="_subject" value="Nueva solicitud de reserva — Laurelli_prod">
+          <button type="submit" class="btn-submit" id="submitBtn"
+            data-sending="Enviando..."
+            data-send="Enviar solicitud"><span>Enviar solicitud</span></button>
+          <div class="form-status" id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="foot-brand">
+      <div class="foot-logo">Laurelli_prod</div>
+      <p class="foot-meta">© 2026 · Raphaël Laurelli · Videografía, Drones &amp; Color Grading</p>
+    </div>
+    <div class="footer-links">
+      <a href="#services">Servicios</a>
+      <a href="#gallery">Firma</a>
+      <a href="#colorgrade">Color</a>
+      <a href="galerie.html">Galería Fotográfica</a>
+      <a href="#booking">Contacto</a>
+    </div>
+  </div>
+</footer>
+
+<!-- CINEMA LIGHTBOX MODAL -->
+<div class="modal-overlay" id="cinemaModal" role="dialog" aria-modal="true" aria-labelledby="cinemaModalTitle">
+  <div class="cinema-modal-box">
+    <div class="cinema-modal-bar">
+      <span class="cinema-modal-title" id="cinemaModalTitle">Proyección</span>
+      <button type="button" class="cinema-modal-close" onclick="closeCinemaModal()" aria-label="Cerrar proyección">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <video id="cinemaModalVideo" class="cinema-modal-video" controls playsinline></video>
+  </div>
+</div>
+
+<!-- MODAL SUCCESS -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button type="button" class="modal-close" onclick="closeModal()" aria-label="Cerrar">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <span class="modal-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>
+    <h3>Solicitud enviada</h3>
+    <p>Gracias por contactar. He recibido tu solicitud y te responderé con disponibilidad y presupuesto orientativo en menos de 24 horas.</p>
+    <button type="button" class="btn-submit" onclick="closeModal()"><span>Cerrar</span></button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
